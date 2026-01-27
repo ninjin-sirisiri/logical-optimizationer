@@ -19,10 +19,11 @@
 **Objective**: React + TypeScript + Vite でプロジェクトをセットアップし、開発環境を整える
 
 **Deliverables**:
-- Vite + React + TypeScript プロジェクトの初期化
-- ESLint / Prettier の設定
-- 基本的なプロジェクト構造の作成
-- CI/CD パイプラインの準備（GitHub Actions）
+- Vite + React + TypeScript プロジェクトの初期化（Bun 使用）
+- oxlint / oxfmt の設定
+- 基本的なプロジェクト構造の作成（`src/core/`, `src/components/` 分離）
+- CI/CD パイプラインの準備（GitHub Actions → Cloudflare Pages）
+- Bun テストランナーのセットアップ
 
 ---
 

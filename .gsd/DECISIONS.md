@@ -64,3 +64,86 @@ Web アプリのフロントエンド技術スタックの選定。
 - 組み合わせ回路の最適化は基盤となる
 - 順序回路は組み合わせ回路の知識を前提とする
 - 早期に動作するものをリリースし、フィードバックを得たい
+
+---
+
+## Phase 1 Decisions
+
+**Date**: 2026-01-27
+
+### ADR-004: Bun をパッケージマネージャー兼ランタイムとして採用
+
+**Status**: Accepted
+
+#### Context
+パッケージマネージャーとテストランナーの選定。
+
+#### Options Considered
+1. npm + Vitest
+2. pnpm + Vitest
+3. Bun（パッケージマネージャー + 組み込みテストランナー）
+
+#### Decision
+**Bun** を選択。
+
+#### Rationale
+- 高速なパッケージインストールとビルド
+- 組み込みのテストランナーで追加依存が不要
+- モダンな開発体験
+
+---
+
+### ADR-005: oxlint + oxfmt を Linter/Formatter として採用
+
+**Status**: Accepted
+
+#### Context
+コード品質ツールの選定。
+
+#### Options Considered
+1. ESLint + Prettier
+2. oxlint + oxfmt
+
+#### Decision
+**oxlint + oxfmt** を選択。
+
+#### Rationale
+- Rust ベースで高速
+- 設定がシンプル
+- ESLint との互換性のある設定が可能
+
+---
+
+### ADR-006: Cloudflare Pages をデプロイ先として採用
+
+**Status**: Accepted
+
+#### Context
+デプロイ先の選定。
+
+#### Options Considered
+1. GitHub Pages
+2. Vercel
+3. Cloudflare Pages
+
+#### Decision
+**Cloudflare Pages** を選択。
+
+#### Rationale
+- 高速なエッジネットワーク
+- 無料枠が充実
+- GitHub との連携が容易
+
+---
+
+### ADR-007: ディレクトリ構造の分離
+
+**Status**: Accepted
+
+#### Decision
+`src/core/`（ロジック）と `src/components/`（UI）を分離する。
+
+#### Rationale
+- 論理回路の処理は UI 非依存
+- テストしやすい設計
+- 将来的な CLI や他のフロントエンドへの再利用が容易
