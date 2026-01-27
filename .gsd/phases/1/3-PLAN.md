@@ -63,7 +63,7 @@ GitHub Actions で CI パイプラインを構築し、Cloudflare Pages への�
              - name: Build
                run: bun run build
        ```
-    
+
     2. package.json に typecheck script を追加:
        ```json
        {
@@ -72,6 +72,7 @@ GitHub Actions で CI パイプラインを構築し、Cloudflare Pages への�
          }
        }
        ```
+
   </action>
   <verify>
     cat .github/workflows/ci.yml
@@ -100,10 +101,11 @@ GitHub Actions で CI パイプラインを構築し、Cloudflare Pages への�
          });
        });
        ```
-    
+
     2. bun test が動作することを確認
-    
+
     注意: Bun はビルトインのテストランナーを持つため、追加の依存関係は不要
+
   </action>
   <verify>
     bun test
@@ -136,11 +138,12 @@ GitHub Actions で CI パイプラインを構築し、Cloudflare Pages への�
        ### Automatic Deployment
        - Push to `main` branch triggers automatic deployment
        ```
-    
+
     2. GitHub リポジトリに Cloudflare Pages を接続する手順は手動で行う
        （Cloudflare ダッシュボードから設定）
-    
+
     注意: wrangler.toml は静的サイトには不要。Cloudflare Pages は自動検出する。
+
   </action>
   <verify>
     bun run build && ls dist/

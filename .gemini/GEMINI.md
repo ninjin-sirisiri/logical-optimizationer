@@ -1,7 +1,7 @@
 # GSD Methodology — Mission Control Rules
 
 > **Get Shit Done**: A spec-driven, context-engineered development methodology.
-> 
+>
 > These rules enforce disciplined, high-quality autonomous development.
 
 ---
@@ -25,12 +25,14 @@
 ```
 
 **If either condition fails:**
+
 - STOP immediately
 - Inform the user that planning must be completed first
 - Offer to help finalize the SPEC or create the ROADMAP
 - DO NOT write any implementation code
 
 **Exceptions:**
+
 - Documentation updates (README, comments)
 - Configuration files for tooling
 - Test scaffolding (but not implementation)
@@ -68,8 +70,9 @@
 4. **Recommend** the user start a fresh session with this context
 
 **Rationale:** Extended debugging in a polluted context leads to:
+
 - Circular reasoning
-- Missed obvious solutions  
+- Missed obvious solutions
 - Hallucinated fixes
 
 A fresh context with documented state often immediately sees the solution.
@@ -80,19 +83,21 @@ A fresh context with documented state often immediately sees the solution.
 
 **Every change MUST be verified before marking complete:**
 
-| Change Type | Verification Method |
-|-------------|---------------------|
-| UI changes | Browser screenshot confirming visual state |
-| API changes | Terminal command showing correct response |
-| Build changes | Successful build/test command output |
-| Config changes | Verification command proving effect |
+| Change Type    | Verification Method                        |
+| -------------- | ------------------------------------------ |
+| UI changes     | Browser screenshot confirming visual state |
+| API changes    | Terminal command showing correct response  |
+| Build changes  | Successful build/test command output       |
+| Config changes | Verification command proving effect        |
 
 **Never mark a phase "Done" based on:**
+
 - "The code looks correct"
 - "This should work"
 - "I've made similar changes before"
 
 **Always mark a phase "Done" based on:**
+
 - Empirical evidence captured and documented
 - Verification criteria from ROADMAP.md satisfied
 
@@ -102,14 +107,14 @@ A fresh context with documented state often immediately sees the solution.
 
 These rules integrate with the GSD workflows:
 
-| Workflow | Rules Enforced |
-|----------|----------------|
-| `/map` | Updates ARCHITECTURE.md, STACK.md |
-| `/plan` | Enforces Planning Lock, creates ROADMAP |
+| Workflow   | Rules Enforced                             |
+| ---------- | ------------------------------------------ |
+| `/map`     | Updates ARCHITECTURE.md, STACK.md          |
+| `/plan`    | Enforces Planning Lock, creates ROADMAP    |
 | `/execute` | Enforces State Persistence after each task |
-| `/verify` | Enforces Empirical Validation |
-| `/pause` | Triggers Context Hygiene state dump |
-| `/resume` | Loads state from STATE.md |
+| `/verify`  | Enforces Empirical Validation              |
+| `/pause`   | Triggers Context Hygiene state dump        |
+| `/resume`  | Loads state from STATE.md                  |
 
 ---
 
@@ -124,5 +129,5 @@ Before "Done"    → Empirical proof captured
 
 ---
 
-*GSD Methodology adapted for Google Antigravity*
-*Source: https://github.com/glittercowboy/get-shit-done*
+_GSD Methodology adapted for Google Antigravity_
+_Source: https://github.com/glittercowboy/get-shit-done_

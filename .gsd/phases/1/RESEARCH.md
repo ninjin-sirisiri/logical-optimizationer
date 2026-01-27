@@ -19,18 +19,20 @@ researched_at: 2026-01-27
 ### oxlint（Linter）
 
 **概要**:
+
 - Rust ベースの高速 JavaScript/TypeScript Linter
 - Oxc (Oxidation Compiler) プロジェクトの一部
 - 2025年6月に v1.0 リリース
 
 **パフォーマンス**:
-| プロジェクト規模      | ESLint | oxlint | 高速化倍率 |
+| プロジェクト規模 | ESLint | oxlint | 高速化倍率 |
 | --------------------- | ------ | ------ | ---------- |
-| 小規模 (50ファイル)   | 2.3秒  | 0.08秒 | 28.75x     |
-| 中規模 (500ファイル)  | 18.7秒 | 0.3秒  | 62.3x      |
-| 大規模 (2000ファイル) | 94.2秒 | 1.1秒  | 85.6x      |
+| 小規模 (50ファイル) | 2.3秒 | 0.08秒 | 28.75x |
+| 中規模 (500ファイル) | 18.7秒 | 0.3秒 | 62.3x |
+| 大規模 (2000ファイル) | 94.2秒 | 1.1秒 | 85.6x |
 
 **特徴**:
+
 - 660+ のビルトインルール
 - TypeScript、React、Jest、Unicorn、jsx-a11y 等のプラグインがネイティブ実装
 - ESLint v8 互換の設定形式 (`.oxlintrc.json`)
@@ -57,6 +59,7 @@ researched_at: 2026-01-27
 ```
 
 **Sources:**
+
 - https://oxc.rs/docs/guide/usage/linter.html
 - https://betterstack.com/community/guides/code-quality/oxlint-eslint-comparison/
 
@@ -65,11 +68,13 @@ researched_at: 2026-01-27
 ### oxfmt（Formatter）
 
 **概要**:
+
 - Rust ベースの高速コードフォーマッター
 - Prettier 互換を目指している
 - Prettier の JS/TS テストの約 95% をパス
 
 **パフォーマンス**:
+
 - Prettier の約 30x 高速
 - Biome の約 2x 高速
 
@@ -77,6 +82,7 @@ researched_at: 2026-01-27
 JavaScript, JSX, TypeScript, TSX, JSON, JSONC, JSON5, YAML, TOML, HTML, Vue, CSS, SCSS, Less, Markdown, MDX, GraphQL
 
 **ビルトイン機能**（Prettier ではプラグインが必要だったもの）:
+
 - Import ソート
 - Tailwind CSS クラスソート
 - package.json フィールドソート
@@ -102,16 +108,17 @@ JavaScript, JSX, TypeScript, TSX, JSON, JSONC, JSON5, YAML, TOML, HTML, Vue, CSS
 ```
 
 **デフォルト値**:
-| オプション    | デフォルト |
+| オプション | デフォルト |
 | ------------- | ---------- |
-| printWidth    | 100        |
-| tabWidth      | 2          |
-| useTabs       | false      |
-| semi          | true       |
-| singleQuote   | false      |
-| trailingComma | "all"      |
+| printWidth | 100 |
+| tabWidth | 2 |
+| useTabs | false |
+| semi | true |
+| singleQuote | false |
+| trailingComma | "all" |
 
 **Sources:**
+
 - https://oxc.rs/docs/guide/usage/formatter.html
 - https://oxc.rs/docs/guide/usage/formatter/config.html
 
@@ -149,7 +156,6 @@ JavaScript, JSX, TypeScript, TSX, JSON, JSONC, JSON5, YAML, TOML, HTML, Vue, CSS
 
 - **ESLint との併用時の注意**: 同じルールを両方で有効にすると競合する
   - `eslint-plugin-oxlint` を使って ESLint 側のルールを無効化するか、完全に移行する
-  
 - **設定ファイルのネスト**: oxfmt は最も近い設定ファイルのみ読み込む（マージしない）
 
 - **jsPlugins の乱用**: 実験的機能なので安定性に注意

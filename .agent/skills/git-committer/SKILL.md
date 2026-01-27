@@ -22,6 +22,7 @@ All commits MUST follow the Conventional Commits format:
 ```
 
 ### Allowed Types
+
 - **feat**: A new feature
 - **fix**: A bug fix
 - **docs**: Documentation only changes
@@ -34,6 +35,7 @@ All commits MUST follow the Conventional Commits format:
 - **chore**: Other changes that don't modify src or test files
 
 ### Allowed Scopes
+
 - `ui`: User interface components
 - `tabs`: Tab management system
 - `command-palette`: Command palette feature
@@ -42,20 +44,23 @@ All commits MUST follow the Conventional Commits format:
 - `tauri`: Backend/Rust code
 - `config`: Configuration files
 - `deps`: Dependency updates
-- *(If the change doesn't fit these, omit the scope or propose a new consistent one)*
+- _(If the change doesn't fit these, omit the scope or propose a new consistent one)_
 
 ### Subject Rules
+
 - **Imperative mood**: "add" not "added" or "adds"
 - **No capitalization**: start with lowercase
 - **No period**: do not end with `.`
 - **Length**: maximum 50 characters
 
 ### Body Rules
+
 - **Required for**: Important, breaking, or complex changes.
 - **Format**: Wrap lines at 72 characters.
 - **Content**: Explain **WHY** the change was needed and **HOW** it implementation works (if complex).
 
 ### Footer Rules
+
 - **Issue References**: ALWAYS include `Refs #123`, `Fixes #456`, etc., if applicable.
 - **Breaking Changes**: Start with `BREAKING CHANGE:` followed by a description.
 
@@ -65,8 +70,8 @@ All commits MUST follow the Conventional Commits format:
 
 1.  **Analyze Staged Changes**:
     - Run `git diff --cached` (or check what is to be committed).
-    - Ensure logical atomicity: Does this commit represent *one* logical change?
-        - If NO: Split the commit.
+    - Ensure logical atomicity: Does this commit represent _one_ logical change?
+      - If NO: Split the commit.
 
 2.  **Draft the Message**:
     - Select the correct `<type>` and `<scope>`.
@@ -88,6 +93,7 @@ All commits MUST follow the Conventional Commits format:
 ## 3. Examples
 
 **Good:**
+
 ```
 feat(tabs): add vertical tab layout
 
@@ -95,6 +101,7 @@ Refs #23
 ```
 
 **Good (Complex):**
+
 ```
 fix(sidebar): prevent sidebar from hiding on hover
 
@@ -106,5 +113,6 @@ Fixes #145
 ```
 
 **Bad:**
+
 - `feat: Added keyboard shortcut.` (Capitalized, past tense, period)
 - `Fixed memory leak` (Missing type, capitalized)
