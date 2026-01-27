@@ -43,6 +43,7 @@
 ## Technical Stack
 
 - **フレームワーク**: React + TypeScript
+- **スタイリング**: Tailwind CSS (v4)
 - **ビルドツール**: Vite
 - **デプロイ先**: GitHub Pages / Vercel（予定）
 - **将来的な追加**: react-flow または D3.js（回路図可視化用）

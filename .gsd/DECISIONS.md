@@ -172,3 +172,32 @@ Web アプリのフロントエンド技術スタックの選定。
 - 論理回路の処理は UI 非依存
 - テストしやすい設計
 - 将来的な CLI や他のフロントエンドへの再利用が容易
+
+---
+
+## ADR-008: Tailwind CSS v4 を採用
+
+**Date**: 2026-01-27
+**Status**: Accepted
+
+### Context
+
+スタイリング手法の選定。
+
+### Options Considered
+
+1. Vanilla CSS / CSS Modules
+2. Tailwind CSS
+3. Styled Components / Emotion
+
+### Decision
+
+**Tailwind CSS (v4)** を選択。
+
+### Rationale
+
+- 迅速な UI 開発が可能
+- ユーティリティファーストによる一貫性
+- Vite プラグイン（@tailwindcss/vite）による高速なビルドと開発体験
+- モバイルスムーズなレスポンシブデザインの容易さ
+- モダンで洗練されたデザインシステムを構築しやすい

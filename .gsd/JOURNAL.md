@@ -29,6 +29,28 @@
 - `.gsd/JOURNAL.md` — 開発ジャーナル
 - `.gsd/TODO.md` — TODOリスト
 
-### Next Session
-
 - `/plan 1` で Phase 1 の詳細計画を作成
+
+---
+
+## 2026-01-27: Tailwind CSS 移行と UI リデザイン
+
+### Session Summary
+
+プロジェクトのスタイリング手法を従来の CSS から Tailwind CSS (v4) へ移行。これに伴い、`App.tsx` をプレミアムなデザインにリデザイン。
+
+### What We Changed
+
+- `tailwindcss` および `@tailwindcss/vite` の導入
+- `vite.config.ts` でのプラグイン設定
+- `src/index.css` の Tailwind 指令への更新
+- `src/App.tsx` の Tailwind クラスによるフルリデザイン
+- 不要になった `src/App.css` の削除
+
+### Key Decisions
+
+- **ADR-008**: 開発効率とデザインの一貫性のために Tailwind CSS v4 を採用。
+
+### Next Step
+
+- `/plan 2` で Phase 2（論理式パーサー実装）のプランを作成
