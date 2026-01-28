@@ -1,4 +1,4 @@
-import type { Circuit, GateNode } from './types.ts';
+import type { Circuit } from './types.ts';
 
 import { CircuitBuilder } from './builder.ts';
 

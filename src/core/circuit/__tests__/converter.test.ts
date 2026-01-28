@@ -8,7 +8,7 @@ describe('convertASTToCircuit', () => {
     const ast = parse('A & B | ~C');
     const circuit = convertASTToCircuit({ Y: ast });
 
-    expect(circuit.inputs.sort()).toEqual(['A', 'B', 'C'].sort());
+    expect(circuit.inputs.toSorted()).toEqual(['A', 'B', 'C'].toSorted());
     expect(circuit.outputs['Y']).toBeDefined();
 
     const outputNodeId = circuit.outputs['Y'];

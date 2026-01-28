@@ -12,7 +12,8 @@
 - **Plan 5.1**: Defined `GateNode` and `Circuit` DAG types and built `CircuitBuilder`.
 - **Plan 5.2**: Implemented AST-to-Circuit conversion with common sub-expression sharing (fan-out).
 - **Plan 5.3**: Implemented NAND/NOR transformers and peephole optimization.
-- **Improvements**: Updated Parser and Lexer to support `&`, `|`, `~`, `^` symbols.
+- **Maintenance**: Performed `bun lint` and fixed all errors and warnings (unused variables, function scoping, `sort` -> `toSorted`).
+- **Verification**: All 111 tests passed after linting fixes.
 
 ## Next Steps
 

@@ -6,83 +6,85 @@ import { convertASTToCircuit } from '../converter.ts';
 import { optimizeCircuit } from '../optimizer.ts';
 import { toNANDOnly, toNOROnly } from '../transformers.ts';
 
+/**
+ * Helper to evaluate a circuit recursively
+ */
+function evaluateCircuit(
+  circuit: any,
+  outputName: string,
+  inputValues: Record<string, boolean>,
+): boolean {
+  const rootId = circuit.outputs[outputName];
+  if (!rootId) return false;
+  const memo = new Map<string, boolean>();
+
+  function evalNode(nodeId: string): boolean {
+    if (inputValues.hasOwnProperty(nodeId)) return inputValues[nodeId];
+    if (memo.has(nodeId)) return memo.get(nodeId)!;
+
+    const node = circuit.gates[nodeId];
+    if (!node) return false;
+    const nodeInputs = node.inputs.map((id: string) => evalNode(id));
+    let result: boolean;
+
+    switch (node.type) {
+      case 'and':
+        result = nodeInputs[0] && nodeInputs[1];
+        break;
+      case 'or':
+        result = nodeInputs[0] || nodeInputs[1];
+        break;
+      case 'not':
+        result = !nodeInputs[0];
+        break;
+      case 'nand':
+        result = !(nodeInputs[0] && nodeInputs[1]);
+        break;
+      case 'nor':
+        result = !(nodeInputs[0] || nodeInputs[1]);
+        break;
+      case 'xor':
+        result = nodeInputs[0] !== nodeInputs[1];
+        break;
+      case 'vcc':
+        result = true;
+        break;
+      case 'gnd':
+        result = false;
+        break;
+      default:
+        throw new Error(`Unknown gate type: ${node.type}`);
+    }
+
+    memo.set(nodeId, result);
+    return result;
+  }
+
+  return evalNode(rootId);
+}
+
+function checkEquivalence(originalAST: any, circuit: any, inputs: string[]) {
+  // Generate all combinations of inputs
+  const combinations = 1 << inputs.length;
+  for (let i = 0; i < combinations; i++) {
+    const values: Record<string, boolean> = {};
+    inputs.forEach((input, index) => {
+      values[input] = !!(i & (1 << index));
+    });
+
+    // Original evaluation
+    const originalResult = evaluate(originalAST, values);
+
+    // Circuit evaluation
+    const circuitResult = evaluateCircuit(circuit, 'Y', values);
+
+    expect(circuitResult).toBe(originalResult);
+  }
+}
+
 describe('Circuit Integration: Transformers and Optimizer', () => {
   const testExpression = 'A & B | ~C';
   const inputs = ['A', 'B', 'C'];
-
-  function checkEquivalence(originalAST: any, circuit: any) {
-    // Generate all combinations of inputs
-    const combinations = 1 << inputs.length;
-    for (let i = 0; i < combinations; i++) {
-      const values: Record<string, boolean> = {};
-      inputs.forEach((input, index) => {
-        values[input] = !!(i & (1 << index));
-      });
-
-      // Original evaluation
-      const originalResult = evaluate(originalAST, values);
-
-      // Circuit evaluation
-      const circuitResult = evaluateCircuit(circuit, 'Y', values);
-
-      expect(circuitResult).toBe(originalResult);
-    }
-  }
-
-  /**
-   * Helper to evaluate a circuit recursively
-   */
-  function evaluateCircuit(
-    circuit: any,
-    outputName: string,
-    inputValues: Record<string, boolean>,
-  ): boolean {
-    const rootId = circuit.outputs[outputName];
-    const memo = new Map<string, boolean>();
-
-    function evalNode(nodeId: string): boolean {
-      if (inputValues.hasOwnProperty(nodeId)) return inputValues[nodeId];
-      if (memo.has(nodeId)) return memo.get(nodeId)!;
-
-      const node = circuit.gates[nodeId];
-      const inputs = node.inputs.map((id: string) => evalNode(id));
-      let result: boolean;
-
-      switch (node.type) {
-        case 'and':
-          result = inputs[0] && inputs[1];
-          break;
-        case 'or':
-          result = inputs[0] || inputs[1];
-          break;
-        case 'not':
-          result = !inputs[0];
-          break;
-        case 'nand':
-          result = !(inputs[0] && inputs[1]);
-          break;
-        case 'nor':
-          result = !(inputs[0] || inputs[1]);
-          break;
-        case 'xor':
-          result = inputs[0] !== inputs[1];
-          break;
-        case 'vcc':
-          result = true;
-          break;
-        case 'gnd':
-          result = false;
-          break;
-        default:
-          throw new Error(`Unknown gate type: ${node.type}`);
-      }
-
-      memo.set(nodeId, result);
-      return result;
-    }
-
-    return evalNode(rootId);
-  }
 
   it('should maintain logical equivalence after NAND-only conversion', () => {
     const ast = parse(testExpression);
@@ -94,7 +96,7 @@ describe('Circuit Integration: Transformers and Optimizer', () => {
       expect(['nand', 'vcc', 'gnd']).toContain(gate.type);
     }
 
-    checkEquivalence(ast, nandCircuit);
+    checkEquivalence(ast, nandCircuit, inputs);
   });
 
   it('should maintain logical equivalence after NOR-only conversion', () => {
@@ -106,7 +108,7 @@ describe('Circuit Integration: Transformers and Optimizer', () => {
       expect(['nor', 'vcc', 'gnd']).toContain(gate.type);
     }
 
-    checkEquivalence(ast, norCircuit);
+    checkEquivalence(ast, norCircuit, inputs);
   });
 
   it('should remove double negations via optimization', () => {
@@ -128,7 +130,7 @@ describe('Circuit Integration: Transformers and Optimizer', () => {
     // nandCircuit is NAND(NAND(A, B), NAND(A, B)) -> 2 gates
     expect(Object.keys(nandCircuit.gates).length).toBe(2);
 
-    const optimized = optimizeCircuit(nandCircuit);
+    optimizeCircuit(nandCircuit);
     // After optimization, if A & B were just A, it would be gone.
     // But here NAND(A, B) is not a double negation.
     // Wait, NAND(NAND(A, B), NAND(A, B)) is NOT(NOT(AND(A, B))) -> AND(A, B).
