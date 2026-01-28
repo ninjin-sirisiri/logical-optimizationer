@@ -5,9 +5,9 @@ import { evaluate } from '../../parser/evaluate';
 import {
   expressionToTruthTable,
   truthTableToExpression,
-  TruthTable,
-  OutputEntry,
   TruthTableError,
+  type TruthTable,
+  type OutputEntry,
 } from '../index';
 
 /**

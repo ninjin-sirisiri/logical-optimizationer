@@ -282,7 +282,7 @@ describe('roundtrip conversion', () => {
 
     // Compare with original
     for (const [pattern, entry] of originalTable.entries) {
-      expect(sopResults[pattern]).toBe(entry.Y);
+      expect(sopResults[pattern]).toBe(entry.Y as boolean);
     }
   });
 
@@ -300,7 +300,7 @@ describe('roundtrip conversion', () => {
 
     // Compare with original
     for (const [pattern, entry] of originalTable.entries) {
-      expect(posResults[pattern]).toBe(entry.Y);
+      expect(posResults[pattern]).toBe(entry.Y as boolean);
     }
   });
 });
