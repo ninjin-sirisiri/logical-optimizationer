@@ -8,9 +8,11 @@
 
 ## Last Session Summary
 
-Phase 8 executed successfully. 3 plans, 8 tasks completed.
+Phase 8 executed successfully. Recently fixed a bug in `toCustomGateSet` transformer.
+
 - Implemented `GateSelector` UI for custom gate management.
 - Developed `toCustomGateSet` transformer for recursive gate decomposition.
+- **Fixed**: Enhanced synthesis logic with De Morgan's laws to support {OR, NOT} and {AND, NOT} gate sets.
 - Integrated custom gate selection into the optimization pipeline.
 - Added functional completeness validation and unit tests.
 - Implemented state persistence via `localStorage`.

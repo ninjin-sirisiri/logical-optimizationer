@@ -1,6 +1,6 @@
 # ROADMAP.md
 
-> **Current Phase**: 7
+> **Current Phase**: 9
 > **Milestone**: v1.0 — 組み合わせ回路の最適化
 
 ## Must-Haves (from SPEC)

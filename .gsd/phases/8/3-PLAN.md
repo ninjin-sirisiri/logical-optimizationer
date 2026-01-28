@@ -14,7 +14,7 @@ Ensure the reliability of the custom gate conversion and provide feedback to the
 
 - src/core/circuit/transformers.ts
 - src/components/panel/GateSelector.tsx
-- src/core/circuit/__tests__/integration.test.ts
+- src/core/circuit/**tests**/integration.test.ts
 
 ## Tasks
 
