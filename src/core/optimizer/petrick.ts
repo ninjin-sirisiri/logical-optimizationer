@@ -1,4 +1,4 @@
-import { Implicant } from './types';
+import type { Implicant } from './types';
 
 /**
  * Petrick's Method Solver.
@@ -37,7 +37,7 @@ function simplifySOP(sop: SOPTerm[]): SOPTerm[] {
   if (sop.length === 0) return [];
 
   // Sort by size to make absorption check easier
-  const sorted = [...sop].sort((a, b) => a.piIndices.size - b.piIndices.size);
+  const sorted = [...sop].toSorted((a, b) => a.piIndices.size - b.piIndices.size);
   const simplified: SOPTerm[] = [];
 
   for (const term of sorted) {

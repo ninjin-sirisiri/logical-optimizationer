@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'bun:test';
 
-import { TruthTable } from '../../truth-table/types';
+import type { TruthTable } from '../../truth-table/types';
+
 import { minimize } from '../index';
 
 describe('Logic Optimizer Integration', () => {
@@ -48,7 +49,7 @@ describe('Logic Optimizer Integration', () => {
 
     const results = minimize(table, 'SOP');
     // PIs: AB ('11-'), AC ('1-1')
-    expect(results[0].implicants.sort()).toEqual(['1-1', '11-']);
+    expect(results[0].implicants.toSorted()).toEqual(['1-1', '11-']);
     expect(results[0].optimizedExpression).toBe('AB + AC');
   });
 

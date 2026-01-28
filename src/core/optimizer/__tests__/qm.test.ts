@@ -27,7 +27,7 @@ describe('generatePrimeImplicants', () => {
     const pis = generatePrimeImplicants(terms);
     // OR(A,B) gives PIs: A ('1-'), B ('-1')
     expect(pis).toHaveLength(2);
-    const patterns = pis.map((p) => p.pattern).sort();
+    const patterns = pis.map((p) => p.pattern).toSorted();
     expect(patterns).toEqual(['-1', '1-']);
   });
 
@@ -46,7 +46,7 @@ describe('generatePrimeImplicants', () => {
     const pis = generatePrimeImplicants(terms);
     // (0,0) and (1,0) -> (-0)
     // (1,0) and (1,1) -> (1-)
-    const patterns = pis.map((p) => p.pattern).sort();
+    const patterns = pis.map((p) => p.pattern).toSorted();
     expect(patterns).toEqual(['-0', '1-']);
   });
 
@@ -70,7 +70,7 @@ describe('generatePrimeImplicants', () => {
     // In this case, 11 is shared, but combining (10,11) for mask 1
     // and (01,11) for mask 2 produces different PIs.
 
-    const sortedPis = pis.sort((a, b) => a.pattern.localeCompare(b.pattern));
+    const sortedPis = pis.toSorted((a, b) => a.pattern.localeCompare(b.pattern));
     expect(sortedPis).toHaveLength(2);
     expect(sortedPis[0].pattern).toBe('-1');
     expect(sortedPis[0].outputMask).toBe(2);

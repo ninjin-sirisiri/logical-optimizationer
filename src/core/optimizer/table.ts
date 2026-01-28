@@ -1,4 +1,4 @@
-import { Implicant } from './types';
+import type { Implicant } from './types';
 
 export interface Target {
   pattern: string;

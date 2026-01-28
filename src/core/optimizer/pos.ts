@@ -1,5 +1,5 @@
-import { TruthTable } from '../truth-table/types';
-import { OptimizationResult } from './types';
+import type { TruthTable } from '../truth-table/types';
+import type { OptimizationResult } from './types';
 
 /**
  * Converts a set of implicant patterns into a logical expression string (POS).

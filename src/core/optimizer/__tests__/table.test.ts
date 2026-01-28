@@ -23,7 +23,7 @@ describe('PITable', () => {
     const epis = table.findEPIs();
 
     // All of them are essential because each is the only one covering their respective minterm
-    expect(epis.sort()).toEqual([0, 1, 2]);
+    expect(epis.toSorted()).toEqual([0, 1, 2]);
   });
 
   it('should identify non-essential PIs', () => {
@@ -45,7 +45,7 @@ describe('PITable', () => {
     // P1 is essential for 0
     // P2 is essential for 3
     // P3 covers 1, but 1 is also covered by P1 and P2. P3 is not essential for anything.
-    expect(epis.sort()).toEqual([0, 1]);
+    expect(epis.toSorted()).toEqual([0, 1]);
   });
 
   it('should reduce table correctly', () => {

@@ -1,4 +1,4 @@
-import { Implicant, Term } from './types';
+import type { Implicant, Term } from './types';
 
 /**
  * Computes the Hamming weight of a pattern string (number of '1's).
@@ -66,7 +66,7 @@ export function generatePrimeImplicants(initialTerms: Term[]): Implicant[] {
       groups.get(w)!.push(p);
     }
 
-    const weights = Array.from(groups.keys()).sort((a, b) => a - b);
+    const weights = Array.from(groups.keys()).toSorted((a, b) => a - b);
 
     // Try combining patterns in adjacent weight groups
     for (let i = 0; i < weights.length - 1; i++) {

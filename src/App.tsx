@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { TruthTableDisplay, TruthTableEditor } from './components/TruthTable';
 import { expressionToTruthTable, type TruthTable } from './core/truth-table';
 
@@ -12,7 +13,7 @@ function App() {
     try {
       const newTable = expressionToTruthTable(val);
       setTable(newTable);
-    } catch (err) {
+    } catch {
       // Ignore parse errors while typing
     }
   };
@@ -26,9 +27,7 @@ function App() {
       <div className="max-w-4xl mx-auto space-y-8">
         <header className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tight">Logical Optimizationer</h1>
-          <p className="text-neutral-500 dark:text-neutral-400">
-            真理値表コンポーネントの動作確認
-          </p>
+          <p className="text-neutral-500 dark:text-neutral-400">真理値表コンポーネントの動作確認</p>
         </header>
 
         <section className="space-y-4 p-6 bg-white dark:bg-neutral-900 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-800">

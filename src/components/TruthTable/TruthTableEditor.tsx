@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+
 import { type TruthTable, type OutputValue, type OutputEntry } from '../../core/truth-table';
 
 export interface TruthTableEditorProps {
@@ -30,16 +31,7 @@ export function TruthTableEditor({
   const { inputVariables, outputVariables, entries } = table;
 
   // Sort patterns for consistent display order
-  const sortedPatterns = Array.from(entries.keys()).sort();
-
-  /**
-   * Cycles the output value: true → false → 'x' → true
-   */
-  const cycleValue = (current: OutputValue): OutputValue => {
-    if (current === true) return false;
-    if (current === false) return 'x';
-    return true;
-  };
+  const sortedPatterns = Array.from(entries.keys()).toSorted();
 
   /**
    * Handles clicking on an output cell
@@ -66,7 +58,7 @@ export function TruthTableEditor({
         entries: newEntries,
       });
     },
-    [entries, inputVariables, outputVariables, onChange, readOnly]
+    [entries, inputVariables, outputVariables, onChange, readOnly],
   );
 
   if (entries.size === 0) {
@@ -129,8 +121,11 @@ export function TruthTableEditor({
                   return (
                     <td
                       key={`out-${varName}`}
-                      className={`px-3 py-1.5 text-center border-b border-neutral-200 dark:border-neutral-700 ${readOnly ? '' : 'cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors'
-                        }`}
+                      className={`px-3 py-1.5 text-center border-b border-neutral-200 dark:border-neutral-700 ${
+                        readOnly
+                          ? ''
+                          : 'cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors'
+                      }`}
                       onClick={() => handleCellClick(pattern, varName)}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
@@ -156,6 +151,15 @@ export function TruthTableEditor({
 }
 
 /**
+ * Cycles the output value: true → false → 'x' → true
+ */
+function cycleValue(current: OutputValue): OutputValue {
+  if (current === true) return false;
+  if (current === false) return 'x';
+  return true;
+}
+
+/**
  * Formats a value for accessibility label
  */
 function formatValue(value: OutputValue): string {
@@ -167,27 +171,17 @@ function formatValue(value: OutputValue): string {
 /**
  * Renders an output value with appropriate styling.
  */
-function OutputValueCell({
-  value,
-  interactive,
-}: {
-  value: OutputValue;
-  interactive: boolean;
-}) {
+function OutputValueCell({ value, interactive }: { value: OutputValue; interactive: boolean }) {
   const baseClass = interactive ? 'select-none' : '';
 
   if (value === true) {
-    return (
-      <span className={`text-green-600 dark:text-green-400 font-medium ${baseClass}`}>1</span>
-    );
+    return <span className={`text-green-600 dark:text-green-400 font-medium ${baseClass}`}>1</span>;
   }
   if (value === false) {
     return <span className={`text-red-600 dark:text-red-400 font-medium ${baseClass}`}>0</span>;
   }
   // Don't care
-  return (
-    <span className={`text-amber-600 dark:text-amber-400 font-medium ${baseClass}`}>X</span>
-  );
+  return <span className={`text-amber-600 dark:text-amber-400 font-medium ${baseClass}`}>X</span>;
 }
 
 export default TruthTableEditor;

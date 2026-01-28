@@ -1,9 +1,10 @@
-import { TruthTable } from '../truth-table/types';
+import type { TruthTable } from '../truth-table/types';
+import type { Term, OptimizationResult } from './types';
+
 import { solveMinimumCover } from './petrick';
 import { optimizePOS } from './pos';
 import { generatePrimeImplicants } from './qm';
-import { PITable, Target } from './table';
-import { Term, OptimizationResult } from './types';
+import { PITable, type Target } from './table';
 
 /**
  * Main entry point for logic optimization.
@@ -83,7 +84,7 @@ export function minimizeSOP(truthTable: TruthTable): OptimizationResult[] {
   const selectedPIs = Array.from(finalPIIndices).map((idx) => pis[idx]);
 
   // 4. Group results by output
-  return outputVariables.map((name, index) => {
+  return outputVariables.map((_, index) => {
     const mask = 1 << index;
     const outputPIs = selectedPIs
       .filter((pi) => (pi.outputMask & mask) !== 0)
