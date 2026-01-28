@@ -1,15 +1,15 @@
 # ROADMAP.md
 
-> **Current Phase**: 6
+> **Current Phase**: 7
 > **Milestone**: v1.0 — 組み合わせ回路の最適化
 
 ## Must-Haves (from SPEC)
 
-- [ ] 論理式のパースと評価
-- [ ] 真理値表 ↔ 論理式の相互変換
-- [ ] 論理式の最適化（SOP/POS）
-- [ ] 使用ゲートのカスタム選択
-- [ ] 複数出力の共通項抽出
+- [x] 論理式のパースと評価
+- [x] 真理値表 ↔ 論理式の相互変換
+- [x] 論理式の最適化（SOP/POS）
+- [x] 使用ゲートのカスタム選択
+- [x] 複数出力の共通項抽出
 - [x] WebベースのUI
 
 ## Phases
@@ -123,7 +123,7 @@
 
 ### Phase 7: 真理値表ベースの入力定義機能
 
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: 論理式の代わりに真理値表を直接編集して、論理関数をゼロから定義できるようにする。
 
 **Deliverables**:
