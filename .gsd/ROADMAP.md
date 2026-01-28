@@ -31,7 +31,7 @@
 
 ### Phase 2: 論理式パーサーの実装
 
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: 論理式（例: `A & B | ~C`）をパースし、抽象構文木（AST）に変換する
 
 **Deliverables**:
