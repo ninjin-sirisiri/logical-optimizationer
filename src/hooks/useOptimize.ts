@@ -56,6 +56,7 @@ export const useOptimize = () => {
         truthTable: inputMode === 'expression' ? table : state.truthTable,
         results: {
           optimizedExpression: optimizedStr,
+          detailedResults: results,
           circuit: circuit,
         },
       }));

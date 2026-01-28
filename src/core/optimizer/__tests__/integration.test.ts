@@ -28,8 +28,8 @@ describe('Logic Optimizer Integration', () => {
     // XOR cannot be simplified into simpler PIs than the minterms themselves (it's "full")
     expect(results[0].implicants).toHaveLength(4);
     // Optimized expression should contain the minterms
-    expect(results[0].optimizedExpression).toContain('¬A¬BC');
-    expect(results[0].optimizedExpression).toContain('ABC');
+    expect(results[0].optimizedExpression).toContain('¬A・¬B・C');
+    expect(results[0].optimizedExpression).toContain('A・B・C');
   });
 
   it('should optimize a simple function (SOP)', () => {
@@ -50,7 +50,7 @@ describe('Logic Optimizer Integration', () => {
     const results = minimize(table, 'SOP');
     // PIs: AB ('11-'), AC ('1-1')
     expect(results[0].implicants.toSorted()).toEqual(['1-1', '11-']);
-    expect(results[0].optimizedExpression).toBe('AB + AC');
+    expect(results[0].optimizedExpression).toBe('A・B + A・C');
   });
 
   it('should optimize to POS form', () => {

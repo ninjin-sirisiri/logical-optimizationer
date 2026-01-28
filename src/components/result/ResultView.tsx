@@ -4,13 +4,44 @@ import React from 'react';
 
 import { appStore } from '../../store';
 import { Button } from '../ui/Button';
+import { ExpressionDisplay } from './ExpressionDisplay';
 
 export const ResultView: React.FC = () => {
-  const { results } = useStoreValue(appStore);
+  const { results, truthTable } = useStoreValue(appStore);
   const [copied, setCopied] = React.useState(false);
 
-  if (!results.optimizedExpression && !results.circuit) {
+  if (!results.detailedResults && !results.optimizedExpression && !results.circuit) {
     return null;
+  }
+
+  // Generate color map for shared implicants
+  const colorMap: Record<string, string> = {};
+  if (results.detailedResults) {
+    const implicantCounts: Record<string, number> = {};
+    results.detailedResults.forEach((res) => {
+      res.implicants.forEach((imp) => {
+        implicantCounts[imp] = (implicantCounts[imp] || 0) + 1;
+      });
+    });
+
+    const sharedImplicants = Object.entries(implicantCounts)
+      .filter(([_, count]) => count > 1)
+      .map(([imp]) => imp);
+
+    const colors = [
+      'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300',
+      'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300',
+      'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300',
+      'bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300',
+      'bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300',
+      'bg-pink-100 dark:bg-pink-900/40 text-pink-700 dark:text-pink-300',
+      'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300',
+      'bg-teal-100 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300',
+    ];
+
+    sharedImplicants.forEach((imp, i) => {
+      colorMap[imp] = colors[i % colors.length];
+    });
   }
 
   const handleCopy = () => {
@@ -39,9 +70,23 @@ export const ResultView: React.FC = () => {
           </Button>
         </div>
         <div className="p-6 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm">
-          <code className="text-xl font-mono text-gray-900 dark:text-gray-100 break-all">
-            {results.optimizedExpression || '0'}
-          </code>
+          <div className="flex flex-col gap-4">
+            {results.detailedResults && truthTable ? (
+              results.detailedResults.map((res) => (
+                <ExpressionDisplay
+                  key={res.outputVariable}
+                  outputVariable={res.outputVariable}
+                  implicants={res.implicants}
+                  inputVariables={truthTable.inputVariables}
+                  colorMap={colorMap}
+                />
+              ))
+            ) : (
+              <code className="text-xl font-mono text-gray-900 dark:text-gray-100 break-all">
+                {results.optimizedExpression || '0'}
+              </code>
+            )}
+          </div>
         </div>
       </div>
 
