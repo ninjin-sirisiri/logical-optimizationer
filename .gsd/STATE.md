@@ -18,5 +18,6 @@ Phase 2: 論理式パーサーの実装 を正常に完了しました。 Pratt�
    - 真理値表UIの要件定義。
 
 ## Context Hygiene
+
 - Last state dump: N/A
 - Debugging attempts: 0/3

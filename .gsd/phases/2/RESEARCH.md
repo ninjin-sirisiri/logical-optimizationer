@@ -35,9 +35,12 @@ Prattパーサー（Top Down Operator Precedence Parser）は、Vaughan Prattが
 // 左右の結合力を返す
 function infixBindingPower(op: string): [number, number] {
   switch (op) {
-    case '+': return [1, 2];  // 左結合（右BPが大きい）
-    case '*': return [3, 4];  // 左結合
-    case '^': return [6, 5];  // 右結合（左BPが大きい）
+    case '+':
+      return [1, 2]; // 左結合（右BPが大きい）
+    case '*':
+      return [3, 4]; // 左結合
+    case '^':
+      return [6, 5]; // 右結合（左BPが大きい）
   }
 }
 
@@ -45,16 +48,19 @@ function infixBindingPower(op: string): [number, number] {
 function prefixBindingPower(op: string): number {
   switch (op) {
     case '-':
-    case '¬': return 7;  // 高優先度
+    case '¬':
+      return 7; // 高優先度
   }
 }
 ```
 
 **結合性のルール:**
+
 - **左結合** (a + b + c → (a + b) + c): 右BP > 左BP
 - **右結合** (a ^ b ^ c → a ^ (b ^ c)): 左BP > 右BP
 
 **Sources:**
+
 - [Simple but Powerful Pratt Parsing - matklad](https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html)
 - [Pratt Parsers: Expression Parsing Made Easy - Bob Nystrom](https://journal.stuffwithstuff.com/2011/03/19/pratt-parsers-expression-parsing-made-easy/)
 
@@ -77,7 +83,7 @@ function parseExpression(minBp: number = 0): ASTNode {
     // 左BPが現在の最小BPより小さければループ終了
     if (lBp < minBp) break;
 
-    consumeToken();  // 演算子を消費
+    consumeToken(); // 演算子を消費
 
     // 右オペランドを再帰的にパース（rBpを新しいminBpとして）
     const rhs = parseExpression(rBp);
@@ -90,6 +96,7 @@ function parseExpression(minBp: number = 0): ASTNode {
 ```
 
 **重要なポイント:**
+
 1. `minBp`引数で「これより弱い演算子で止まる」を制御
 2. `lBp < minBp`のチェックでループ脱出を判断
 3. 再帰呼び出しには`rBp`を渡す（結合性の制御）
@@ -102,27 +109,28 @@ function parseExpression(minBp: number = 0): ASTNode {
 
 ```typescript
 enum TokenType {
-  Variable,     // A, B, input_1
-  Constant,     // 0, 1
-  And,          // ・
-  Or,           // +
-  Not,          // ¬
-  Xor,          // ⊕
-  LeftParen,    // (
-  RightParen,   // )
+  Variable, // A, B, input_1
+  Constant, // 0, 1
+  And, // ・
+  Or, // +
+  Not, // ¬
+  Xor, // ⊕
+  LeftParen, // (
+  RightParen, // )
   Eof,
 }
 
 interface Token {
   type: TokenType;
   value: string;
-  position: number;  // エラー報告用
+  position: number; // エラー報告用
 }
 ```
 
 #### 実装のポイント
 
 1. **ステートフルなクラス設計**
+
    ```typescript
    class Lexer {
      private input: string;
@@ -144,6 +152,7 @@ interface Token {
    - 各トークンにposition情報を持たせる
 
 **Sources:**
+
 - [Building a Lexer in TypeScript](https://mohitkarekar.com)
 - [dev.to TypeScript Lexer Tutorial](https://dev.to)
 
@@ -163,6 +172,7 @@ interface Token {
 #### 括弧の処理
 
 括弧はprefixパースレットとして処理：
+
 1. `(`を見たら`parseExpression(0)`を再帰呼び出し
 2. `)`を期待して消費
 
@@ -205,13 +215,13 @@ type ASTNode =
 
 ```typescript
 const BINDING_POWERS: Record<string, [number, number]> = {
-  '+': [1, 2],   // OR
-  '⊕': [3, 4],   // XOR
-  '・': [5, 6],   // AND
+  '+': [1, 2], // OR
+  '⊕': [3, 4], // XOR
+  '・': [5, 6], // AND
 };
 
 const PREFIX_BP: Record<string, number> = {
-  '¬': 7,        // NOT
+  '¬': 7, // NOT
 };
 ```
 
@@ -231,9 +241,7 @@ interface InfixParselet {
 ### 3. Result Type Pattern（エラー処理）
 
 ```typescript
-type ParseResult<T> =
-  | { ok: true; value: T }
-  | { ok: false; error: ParseError };
+type ParseResult<T> = { ok: true; value: T } | { ok: false; error: ParseError };
 ```
 
 ---

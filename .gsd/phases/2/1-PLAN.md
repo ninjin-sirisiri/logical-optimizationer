@@ -52,6 +52,7 @@ wave: 1
        - message: string
        - position: number
        - expected?: string[]
+
   </action>
   <verify>bun run typecheck</verify>
   <done>types.ts が存在し、型チェックが通る</done>
@@ -85,6 +86,7 @@ wave: 1
 
     5. エラー処理:
        - 未知の文字は ParseError をスロー
+
   </action>
   <verify>bun run typecheck</verify>
   <done>lexer.ts が存在し、型チェックが通る</done>
@@ -123,6 +125,7 @@ wave: 1
 
     7. エラーケース:
        - '@' → ParseError
+
   </action>
   <verify>bun test src/core/parser/__tests__/lexer.test.ts</verify>
   <done>全テストケースがパスする</done>

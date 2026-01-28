@@ -62,6 +62,7 @@ Binding Power テーブル駆動型で、演算子の優先順位と結合性を
     注意:
     - Lexer への依存は constructor injection で
     - Token の位置情報をエラーメッセージに含める
+
   </action>
   <verify>bun run typecheck</verify>
   <done>parser.ts が存在し、型チェックが通る</done>
@@ -103,13 +104,14 @@ Binding Power テーブル駆動型で、演算子の優先順位と結合性を
        - '(A)' → 単純なグループ化
 
     7. 複合式:
-       - '¬(A・B)+C' 
+       - '¬(A・B)+C'
        - 'A⊕B・C+D'
 
     8. エラーケース:
        - '' → 空の入力
        - '(' → 閉じ括弧なし
        - 'A+' → オペランドなし
+
   </action>
   <verify>bun test src/core/parser/__tests__/parser.test.ts</verify>
   <done>全テストケースがパスする</done>

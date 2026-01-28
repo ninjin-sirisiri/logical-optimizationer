@@ -16,10 +16,13 @@
 ## Empirical Evidence
 
 ### Test Execution Results
+
 ```bash
 bun test src/core/parser/
 ```
+
 Output:
+
 ```
 src\core\parser\__tests__\evaluate.test.ts:
  9 pass, 0 fail
@@ -34,6 +37,7 @@ Ran 28 tests across 4 files. [125.00ms]
 ```
 
 ### Static Analysis Results
+
 - `bun run typecheck`: SUCCESS
 - `bun run lint`: SUCCESS (`oxlint` reported 0 warnings/errors)
 

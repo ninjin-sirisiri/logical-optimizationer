@@ -334,9 +334,9 @@ type ASTNode =
 
 ```typescript
 interface ParseError {
-  message: string;      // エラーメッセージ
-  position: number;     // 文字位置（0-indexed）
-  expected?: string[];  // 期待していたトークン（任意）
+  message: string; // エラーメッセージ
+  position: number; // 文字位置（0-indexed）
+  expected?: string[]; // 期待していたトークン（任意）
 }
 ```
 

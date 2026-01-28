@@ -29,7 +29,7 @@ ASTを評価して論理値を計算するエンジンを実装する。
     1. 型定義:
        ```typescript
        type VariableAssignment = Record<string, boolean>;
-       
+
        function evaluate(ast: ASTNode, assignment: VariableAssignment): boolean
        ```
 
@@ -47,6 +47,7 @@ ASTを評価して論理値を計算するエンジンを実装する。
 
     4. 補助関数:
        - extractVariables(ast: ASTNode): string[] — AST内の全変数名を抽出
+
   </action>
   <verify>bun run typecheck</verify>
   <done>evaluate.ts が存在し、型チェックが通る</done>
@@ -100,6 +101,7 @@ ASTを評価して論理値を計算するエンジンを実装する。
 
     9. エラーケース:
        - parse('A'), {} → EvaluationError (変数Aが未定義)
+
   </action>
   <verify>bun test src/core/parser/__tests__/evaluate.test.ts</verify>
   <done>全テストケースがパスする</done>

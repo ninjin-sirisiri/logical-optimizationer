@@ -35,7 +35,7 @@ wave: 2
 
        // 文字列から直接評価
        export function evaluateExpression(
-         input: string, 
+         input: string,
          assignment: VariableAssignment
        ): boolean
 
@@ -56,6 +56,7 @@ wave: 2
     4. 低レベル関数のエクスポート:
        - evaluate
        - extractVariables
+
   </action>
   <verify>bun run typecheck</verify>
   <done>index.ts が存在し、全APIがエクスポートされている</done>
@@ -97,6 +98,7 @@ wave: 2
        - ParseError が正しくスローされる
        - EvaluationError が正しくスローされる
        - エラーメッセージに位置情報が含まれる
+
   </action>
   <verify>bun test src/core/parser/__tests__/integration.test.ts</verify>
   <done>全統合テストがパスする</done>
@@ -124,6 +126,7 @@ wave: 2
        ```
 
     4. 問題があれば修正
+
   </action>
   <verify>bun test src/core/parser/ && bun run typecheck && bun run lint</verify>
   <done>全テスト通過、型チェック成功、リント警告なし</done>
