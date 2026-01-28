@@ -30,7 +30,7 @@ export function TruthTableEditor({
   const { inputVariables, outputVariables, entries } = table;
 
   // Sort patterns for consistent display order
-  const sortedPatterns = Array.from(entries.keys()).toSorted();
+  const sortedPatterns = Array.from(entries.keys()).sort();
 
   /**
    * Cycles the output value: true → false → 'x' → true

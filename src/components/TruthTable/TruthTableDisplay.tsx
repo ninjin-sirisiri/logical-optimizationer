@@ -20,7 +20,7 @@ export function TruthTableDisplay({ table, className = '' }: TruthTableDisplayPr
   const { inputVariables, outputVariables, entries } = table;
 
   // Sort patterns for consistent display order
-  const sortedPatterns = Array.from(entries.keys()).toSorted();
+  const sortedPatterns = Array.from(entries.keys()).sort();
 
   if (entries.size === 0) {
     return (

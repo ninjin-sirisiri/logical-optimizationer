@@ -10,6 +10,7 @@ import type { ASTNode } from '../parser/types';
 import type { TruthTable, OutputEntry } from './types';
 
 import { evaluate, extractVariables } from '../parser/evaluate';
+import { parse } from '../parser/index';
 import { generateAllPatterns, patternToAssignment, validateVariableCount } from './utils';
 
 /**
@@ -28,7 +29,7 @@ import { generateAllPatterns, patternToAssignment, validateVariableCount } from 
  */
 export function generateTruthTable(ast: ASTNode, outputName = 'Y'): TruthTable {
   // Extract and sort input variables
-  const inputVariables = extractVariables(ast).toSorted();
+  const inputVariables = [...extractVariables(ast)].sort();
 
   // Validate variable count
   validateVariableCount(inputVariables.length);
@@ -67,10 +68,8 @@ export function generateTruthTable(ast: ASTNode, outputName = 'Y'): TruthTable {
  * const table = generateTruthTableFromExpression('A ^ B');
  * // Creates XOR truth table
  */
+
 export function generateTruthTableFromExpression(expression: string, outputName = 'Y'): TruthTable {
-  // Import parse dynamically to avoid circular dependency
-  // We use a dynamic import pattern here
-  const { parse } = require('../parser/index');
   const ast = parse(expression);
   return generateTruthTable(ast, outputName);
 }
