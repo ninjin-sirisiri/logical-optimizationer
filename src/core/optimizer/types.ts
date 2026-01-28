@@ -27,6 +27,7 @@ export interface Term {
  */
 export interface OptimizationResult {
   outputIndex: number;
+  outputVariable: string;
   originalExpression?: string;
   optimizedExpression: string;
   implicants: string[];

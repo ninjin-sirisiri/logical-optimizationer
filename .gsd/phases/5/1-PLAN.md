@@ -7,9 +7,11 @@ wave: 1
 # Plan 5.1: Circuit Data Structure Definition
 
 ## Objective
+
 Define the core data structures for gate-level circuits using a Directed Acyclic Graph (DAG) approach. This provides the foundation for gate conversion and fan-out management.
 
 ## Context
+
 - .gsd/SPEC.md
 - .gsd/DECISIONS.md (ADR-023)
 - src/core/parser/types.ts (for reference)
@@ -65,6 +67,7 @@ Define the core data structures for gate-level circuits using a Directed Acyclic
 </task>
 
 ## Success Criteria
+
 - [ ] `GateNode` and `Circuit` types are defined and follow the DAG approach.
 - [ ] `CircuitBuilder` can successfully construct a valid circuit.
 - [ ] Tests verify the integrity of the created DAG.

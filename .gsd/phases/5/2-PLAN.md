@@ -7,9 +7,11 @@ wave: 1
 # Plan 5.2: Core Circuit Converter Implementation
 
 ## Objective
+
 Implement the logic to convert optimized logical expressions (AST) into a gate-level circuit (DAG). This handles the initial mapping from logic to gates.
 
 ## Context
+
 - .gsd/SPEC.md
 - .gsd/DECISIONS.md (ADR-024)
 - src/core/parser/types.ts
@@ -51,6 +53,7 @@ Implement the logic to convert optimized logical expressions (AST) into a gate-l
 </task>
 
 ## Success Criteria
+
 - [ ] AST nodes are correctly mapped to `GateNode`s.
 - [ ] Multilevel common expressions result in shared gate instances in the DAG.
 - [ ] Integration tests verify the end-to-end conversion from string -> AST -> Circuit.

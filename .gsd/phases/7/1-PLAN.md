@@ -7,9 +7,11 @@ wave: 1
 # Plan 7.1: Store Schema & Mode Toggle
 
 ## Objective
+
 Update the application store to support different input modes and provide a UI to toggle between then.
 
 ## Context
+
 - .gsd/SPEC.md
 - src/store/index.ts
 - src/App.tsx
@@ -54,5 +56,6 @@ Update the application store to support different input modes and provide a UI t
 </task>
 
 ## Success Criteria
+
 - [ ] Store supports `inputMode`.
 - [ ] Toggle UI is functional and follows premium design.

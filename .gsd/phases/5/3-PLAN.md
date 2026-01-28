@@ -7,9 +7,11 @@ wave: 2
 # Plan 5.3: Specialized Gate Sets and Peephole Optimization
 
 ## Objective
+
 Enable conversion to specialized gate sets (NAND-only, NOR-only) and implement optimization passes to remove redundant gates (like double negations).
 
 ## Context
+
 - .gsd/SPEC.md
 - .gsd/DECISIONS.md (ADR-024, ADR-025)
 - .gsd/phases/5/RESEARCH.md
@@ -71,6 +73,7 @@ Enable conversion to specialized gate sets (NAND-only, NOR-only) and implement o
 </task>
 
 ## Success Criteria
+
 - [ ] Circuits can be successfully converted to NAND-only and NOR-only forms.
 - [ ] Redundant gates (especially double negations) are removed automatically.
 - [ ] Truth table verification ensures logical equivalence after all transformations.

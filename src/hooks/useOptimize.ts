@@ -1,5 +1,3 @@
-import { useStoreValue } from '@simplestack/store/react';
-
 import { convertASTToCircuit } from '../core/circuit/converter';
 import { toNANDOnly, toNOROnly } from '../core/circuit/transformers';
 import { minimize } from '../core/optimizer';
@@ -8,10 +6,10 @@ import { expressionToTruthTable } from '../core/truth-table';
 import { appStore } from '../store';
 
 export const useOptimize = () => {
-  const { expression, inputMode, truthTable, options } = useStoreValue(appStore);
-
   const optimize = () => {
     try {
+      const state = appStore.get();
+      const { expression, inputMode, truthTable, options } = state;
       let table = truthTable;
 
       // 1. Determine source of Truth Table
@@ -62,8 +60,9 @@ export const useOptimize = () => {
         },
       }));
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Optimization failed:', error);
-      // Future: Set error state in store for UI display
+      alert('Optimization failed. Check console for details.');
     }
   };
 

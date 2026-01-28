@@ -85,8 +85,8 @@
 
 - **src/core/circuit/converter.ts**: `getASTKey` を外部スコープに移動し、不要な関数再生成を防止。
 - **src/core/circuit/transformers.ts**: 未使用の型インポート `GateNode` を削除。
-- **src/core/circuit/__tests__/integration.test.ts**: 未使用変数 `optimized` の削除、ヘルパー関数 `evaluateCircuit` と `checkEquivalence` のスコープ修正。
-- **src/core/circuit/__tests__/converter.test.ts**: `Array#sort()` をイミュータブルな `Array#toSorted()` に置き換え（oxlint による修正）。
+- **src/core/circuit/**tests**/integration.test.ts**: 未使用変数 `optimized` の削除、ヘルパー関数 `evaluateCircuit` と `checkEquivalence` のスコープ修正。
+- **src/core/circuit/**tests**/converter.test.ts**: `Array#sort()` をイミュータブルな `Array#toSorted()` に置き換え（oxlint による修正）。
 - **共通**: すべての `oxlint` 警告とエラーを解消し、`bun lint` が正常に終了（Exit 0）することを確認。
 
 ### Key Decisions

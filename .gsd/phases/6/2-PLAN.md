@@ -7,9 +7,11 @@ wave: 1
 # Plan 6.2: Core Shell and Expression Editor
 
 ## Objective
+
 Implement the main application layout and the logic expression editor with symbol input helpers, following the Mu minimalist design guidelines using Tailwind CSS v4.
 
 ## Context
+
 - .gsd/SPEC.md
 - .agent/rules/ui-design-guidelines.md (Mu Design)
 - src/store/index.ts (Created in Plan 6.1)
@@ -43,5 +45,6 @@ Implement the main application layout and the logic expression editor with symbo
 </task>
 
 ## Success Criteria
+
 - [ ] Application shell follows Mu design guidelines (Tailwind v4 standard values).
 - [ ] Expression editor supports both keyboard input and virtual symbol buttons.

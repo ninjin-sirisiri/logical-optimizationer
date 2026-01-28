@@ -16,6 +16,7 @@
 ## Verification Evidence
 
 ### Unit Tests
+
 ```
 src\core\circuit\__tests__\builder.test.ts: 3 pass
 src\core\circuit\__tests__\converter.test.ts: 4 pass
@@ -23,6 +24,7 @@ src\core\circuit\__tests__\integration.test.ts: 4 pass
 ```
 
 ### Logical Equivalence
+
 Integration tests confirm that any logical expression converted to NAND/NOR-only circuits maintains its truth table behavior.
 
 ## Verdict: PASS

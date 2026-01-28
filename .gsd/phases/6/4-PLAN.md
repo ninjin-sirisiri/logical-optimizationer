@@ -7,9 +7,11 @@ wave: 1
 # Plan 6.4: Optimization Panel and Result Integration
 
 ## Objective
+
 Implement optimization configuration options and display the final results (expressions and circuits) to the user.
 
 ## Context
+
 - .gsd/SPEC.md
 - src/core/optimizer/index.ts
 - src/core/circuit/transformer.ts
@@ -48,5 +50,6 @@ Implement optimization configuration options and display the final results (expr
 </task>
 
 ## Success Criteria
+
 - [ ] User can switch between SOP/POS and gate sets.
 - [ ] Final optimized expression and circuit info are visible.

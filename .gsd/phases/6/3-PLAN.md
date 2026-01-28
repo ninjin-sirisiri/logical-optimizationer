@@ -7,9 +7,11 @@ wave: 1
 # Plan 6.3: Truth Table Editor
 
 ## Objective
+
 Create a dynamic, scrollable truth table editor that allows users to directly toggle output values and see the relationship between inputs and outputs.
 
 ## Context
+
 - src/core/truth-table/types.ts
 - .gsd/DECISIONS.md (ADR-029 - Local scroll)
 - src/store/index.ts
@@ -43,5 +45,6 @@ Create a dynamic, scrollable truth table editor that allows users to directly to
 </task>
 
 ## Success Criteria
+
 - [ ] Truth table is fully editable for output values (0, 1, x).
 - [ ] Horizontal scroll is localized to the table component.

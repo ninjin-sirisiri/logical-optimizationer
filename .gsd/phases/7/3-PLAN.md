@@ -7,9 +7,11 @@ wave: 2
 # Plan 7.3: Data Sync & Optimization Integration
 
 ## Objective
+
 Connect the editable truth table to the store and update the optimization engine to handle direct table input.
 
 ## Context
+
 - src/components/table/TruthTableEditor.tsx
 - src/hooks/useOptimize.ts
 
@@ -52,6 +54,7 @@ Connect the editable truth table to the store and update the optimization engine
 </task>
 
 ## Success Criteria
+
 - [ ] Editable truth table correctly updates store.
 - [ ] Optimization can be triggered directly from a manually defined table.
 - [ ] Multi-output optimization is functional.

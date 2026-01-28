@@ -2,19 +2,18 @@
 
 ## Current Position
 
-- **Phase**: 7 (Completed)
-- **Task**: All tasks complete
-- **Status**: Verified
+- **Phase**: 8 (Integration & Polish)
+- **Task**: Fix UI visibility issues
+- **Status**: Completed
 
 ## Last Session Summary
 
-Phase 7 "真理値表ベースの入力定義機能" executed successfully.
-- Implemented `VariableManager` for adding/removing input/output variables.
-- Created `InputModeToggle` to switch between Expression/Table modes.
-- Updated `useOptimize` to handle truth table inputs directly.
-- Added "Reset Outputs" button to `TruthTableEditor`.
-- Verified with integration tests (`bun test integration`) passing.
+Fixed a UI visibility issue where the "Add Variable" buttons in `VariableManager` were difficult to see due to low contrast.
+
+- Buttons now use a white background (dark gray in dark mode) with a distinct border and shadow to pop against the container.
+- Icon stroke width increased to 3 for better readability.
+- Button variation `outline` added to UI library.
 
 ## Next Steps
 
-1. Proceed to Phase 8: 統合テストとポリッシュ
+1. Continue with Phase 8 objectives: E2E Testing, Performance, etc.

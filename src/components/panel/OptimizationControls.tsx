@@ -1,9 +1,15 @@
-import React from 'react';
 import { useStoreValue } from '@simplestack/store/react';
+import { Play } from 'lucide-react';
+import React from 'react';
+
+import { useOptimize } from '../../hooks/useOptimize';
+import { cn } from '../../lib/utils';
 import { appStore, type OptimizationMode, type GateSet } from '../../store';
+import { Button } from '../ui/Button';
 
 export const OptimizationControls: React.FC = () => {
   const { options } = useStoreValue(appStore);
+  const { optimize } = useOptimize();
 
   const setMode = (mode: OptimizationMode) => {
     appStore.set((state) => ({ ...state, options: { ...state.options, mode } }));
@@ -14,38 +20,34 @@ export const OptimizationControls: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-6 border border-gray-100 dark:border-gray-800 rounded-lg bg-gray-50/30 dark:bg-gray-900/30">
+    <div className="flex flex-col gap-6 p-6 border border-gray-200 dark:border-gray-800 rounded-lg bg-white dark:bg-gray-900 shadow-sm">
       <div className="flex flex-col gap-3">
-        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+        <label className="text-sm font-medium text-gray-900 dark:text-gray-100">
           Optimization Mode
         </label>
-        <div className="flex p-0.5 bg-gray-100 dark:bg-gray-800 rounded-md w-fit">
-          <button
-            onClick={() => setMode('SOP')}
-            className={`px-4 py-1.5 text-xs font-medium rounded transition-all ${options.mode === 'SOP'
-              ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
-              : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
-              }`}
-          >
-            SOP (積和形)
-          </button>
-          <button
-            onClick={() => setMode('POS')}
-            className={`px-4 py-1.5 text-xs font-medium rounded transition-all ${options.mode === 'POS'
-              ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
-              : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
-              }`}
-          >
-            POS (和積形)
-          </button>
+        <div className="flex p-1 bg-gray-100 dark:bg-gray-800 rounded-lg w-full">
+          {(['SOP', 'POS'] as const).map((mode) => (
+            <button
+              key={mode}
+              onClick={() => setMode(mode)}
+              className={cn(
+                'flex-1 px-4 py-1.5 text-sm font-medium rounded-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-500',
+                options.mode === mode
+                  ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
+                  : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200',
+              )}
+            >
+              {mode === 'SOP' ? 'SOP (Sum of Products)' : 'POS (Product of Sums)'}
+            </button>
+          ))}
         </div>
       </div>
 
       <div className="flex flex-col gap-3">
-        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+        <label className="text-sm font-medium text-gray-900 dark:text-gray-100">
           Target Gate Set
         </label>
-        <div className="grid grid-cols-1 gap-1">
+        <div className="flex flex-col gap-1">
           {[
             { id: 'default', label: 'Default (AND/OR/NOT)' },
             { id: 'nand', label: 'NAND Only' },
@@ -54,15 +56,23 @@ export const OptimizationControls: React.FC = () => {
             <button
               key={set.id}
               onClick={() => setGateSet(set.id as GateSet)}
-              className={`px-4 py-2 text-left text-xs rounded-md transition-colors ${options.gateSet === set.id
-                ? 'bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900'
-                : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
-                }`}
+              className={cn(
+                'w-full px-4 py-2 text-left text-sm rounded-md transition-colors border',
+                options.gateSet === set.id
+                  ? 'border-gray-900 dark:border-gray-100 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 font-medium'
+                  : 'border-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800',
+              )}
             >
               {set.label}
             </button>
           ))}
         </div>
+      </div>
+      <div className="pt-2">
+        <Button onClick={() => optimize()} className="w-full shadow-sm">
+          <Play className="w-4 h-4 mr-2 fill-current" />
+          Optimize
+        </Button>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import type { OptimizationResult } from './types';
 
 /**
  * Converts a set of implicant patterns into a logical expression string (POS).
- * Logic: 0 -> Var, 1 -> Var', - -> skip
+ * Logic: 0 -> Var, 1 -> ¬Var, - -> skip
  */
 export function implicantsToPOSExpression(patterns: string[], vars: string[]): string {
   if (patterns.length === 0) return '1';
@@ -12,7 +12,7 @@ export function implicantsToPOSExpression(patterns: string[], vars: string[]): s
     const literals = [];
     for (let i = 0; i < p.length; i++) {
       if (p[i] === '0') literals.push(vars[i]);
-      if (p[i] === '1') literals.push(`${vars[i]}'`);
+      if (p[i] === '1') literals.push(`¬${vars[i]}`);
     }
     return literals.length === 0
       ? '0'
@@ -22,7 +22,7 @@ export function implicantsToPOSExpression(patterns: string[], vars: string[]): s
   });
 
   if (terms.includes('0')) return '0';
-  return terms.join('');
+  return terms.join('・');
 }
 
 /**
@@ -63,6 +63,7 @@ export function optimizePOS(
     // So the patterns are identical!
     return {
       outputIndex: res.outputIndex,
+      outputVariable: res.outputVariable,
       implicants: res.implicants,
       optimizedExpression: implicantsToPOSExpression(res.implicants, truthTable.inputVariables),
     };

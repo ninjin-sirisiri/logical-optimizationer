@@ -23,7 +23,11 @@ export class Lexer {
   }
 
   private skipWhitespace(): void {
-    while (this.position < this.input.length && /\s/.test(this.input[this.position])) {
+    // Check for standard whitespace or full-width space (U+3000)
+    while (
+      this.position < this.input.length &&
+      (/\s/.test(this.input[this.position]) || this.input[this.position] === '\u3000')
+    ) {
       this.position++;
     }
   }
@@ -43,11 +47,13 @@ export class Lexer {
       this.position++;
       return { type: TokenType.And, value: char, position: start };
     }
-    if (char === '+' || char === '|') {
+    // Added '＋' and '｜' for full-width support
+    if (char === '+' || char === '|' || char === '＋' || char === '｜') {
       this.position++;
       return { type: TokenType.Or, value: char, position: start };
     }
-    if (char === '¬' || char === '~' || char === '!') {
+    // Added '！' for full-width support
+    if (char === '¬' || char === '~' || char === '!' || char === '！') {
       this.position++;
       return { type: TokenType.Not, value: char, position: start };
     }
@@ -55,19 +61,24 @@ export class Lexer {
       this.position++;
       return { type: TokenType.Xor, value: char, position: start };
     }
-    if (char === '(') {
+    // Added '（' for full-width support
+    if (char === '(' || char === '（') {
       this.position++;
       return { type: TokenType.LeftParen, value: char, position: start };
     }
-    if (char === ')') {
+    // Added '）' for full-width support
+    if (char === ')' || char === '）') {
       this.position++;
       return { type: TokenType.RightParen, value: char, position: start };
     }
 
     // Constants
-    if (char === '0' || char === '1') {
+    // Added '０' and '１' for full-width support
+    if (char === '0' || char === '1' || char === '０' || char === '１') {
       this.position++;
-      return { type: TokenType.Constant, value: char, position: start };
+      // Normalize value to ASCII for processing
+      const normalized = char === '０' ? '0' : char === '１' ? '1' : char;
+      return { type: TokenType.Constant, value: normalized, position: start };
     }
 
     // Variables

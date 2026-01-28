@@ -18,14 +18,10 @@ export const Shell: React.FC<ShellProps> = ({ children }) => {
               Optimization Engine
             </p>
           </div>
-          <nav className="flex gap-4">
-            {/* Future: Mode toggles, help, etc. */}
-          </nav>
+          <nav className="flex gap-4">{/* Future: Mode toggles, help, etc. */}</nav>
         </header>
 
-        <main className="py-12 flex flex-col gap-12">
-          {children}
-        </main>
+        <main className="py-12 flex flex-col gap-12">{children}</main>
 
         <footer className="py-12 mt-auto border-t border-gray-50 dark:border-gray-900 text-xs text-gray-400 flex justify-between">
           <p>© 2026 Mu Design System</p>
@@ -37,7 +33,8 @@ export const Shell: React.FC<ShellProps> = ({ children }) => {
       <div className="lg:hidden fixed inset-0 z-50 bg-white dark:bg-gray-900 flex items-center justify-center p-8">
         <div className="max-w-xs text-center">
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            Mu Logic is designed for desktop productivity.<br />
+            Mu Logic is designed for desktop productivity.
+            <br />
             Please use a screen width of 1024px or greater.
           </p>
         </div>

@@ -1,15 +1,16 @@
-import { useStore } from '@simplestack/store/react';
-import { appStore } from './store';
-import { Shell } from './components/layout/Shell';
+import { useStoreValue } from '@simplestack/store/react';
+
 import { ExpressionEditor } from './components/editor/ExpressionEditor';
-import { TruthTableEditor } from './components/table/TruthTableEditor';
-import { OptimizationControls } from './components/panel/OptimizationControls';
-import { ResultView } from './components/result/ResultView';
 import { InputModeToggle } from './components/editor/InputModeToggle';
 import { VariableManager } from './components/editor/VariableManager';
+import { Shell } from './components/layout/Shell';
+import { OptimizationControls } from './components/panel/OptimizationControls';
+import { ResultView } from './components/result/ResultView';
+import { TruthTableEditor } from './components/table/TruthTableEditor';
+import { appStore } from './store';
 
 function App() {
-  const { inputMode } = useStore(appStore);
+  const { inputMode } = useStoreValue(appStore);
 
   return (
     <Shell>

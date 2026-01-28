@@ -1,12 +1,16 @@
-import React from 'react';
 import { useStoreValue } from '@simplestack/store/react';
-import { appStore } from '../../store';
+import { RotateCcw } from 'lucide-react';
+import React from 'react';
+
 import type { OutputValue } from '../../core/truth-table/types';
 
+import { appStore } from '../../store';
+import { Button } from '../ui/Button';
+
 const renderValue = (val: OutputValue) => {
-  if (val === true) return <span className="text-blue-500 font-bold">1</span>;
-  if (val === false) return <span className="text-gray-400">0</span>;
-  return <span className="text-yellow-500">x</span>;
+  if (val === true) return <span className="text-blue-600 dark:text-blue-400 font-bold">1</span>;
+  if (val === false) return <span className="text-gray-400 dark:text-gray-500">0</span>;
+  return <span className="text-yellow-600 dark:text-yellow-400 font-bold">x</span>;
 };
 
 export const TruthTableEditor: React.FC = () => {
@@ -14,9 +18,9 @@ export const TruthTableEditor: React.FC = () => {
 
   if (!truthTable) {
     return (
-      <div className="h-64 flex flex-col items-center justify-center border border-gray-100 dark:border-gray-800 rounded-lg bg-gray-50/50 dark:bg-gray-950/50 text-gray-400">
-        <p className="text-sm">No truth table data available.</p>
-        <p className="text-xs mt-1">Enter a valid expression or import a table.</p>
+      <div className="h-64 flex flex-col items-center justify-center border border-gray-200 dark:border-gray-800 rounded-lg bg-gray-50 dark:bg-gray-900/50 text-gray-500 dark:text-gray-400">
+        <p className="text-sm font-medium">No truth table data available</p>
+        <p className="text-xs mt-1 text-gray-400">Enter a valid expression to generate a table</p>
       </div>
     );
   }
@@ -33,16 +37,18 @@ export const TruthTableEditor: React.FC = () => {
       newEntries.set(pattern, newOutputs);
     }
 
-    appStore.update((state) => {
-      if (state.truthTable) {
-        state.truthTable.entries = newEntries;
-      }
-    });
+    appStore.set((state) => ({
+      ...state,
+      truthTable: state.truthTable
+        ? {
+            ...state.truthTable,
+            entries: newEntries,
+          }
+        : state.truthTable,
+    }));
   };
 
-  // Toggle output value: 0 -> 1 -> x -> 0
   const handleToggleOutput = (pattern: string, outputName: string) => {
-    // ... existing logic ...
     const currentEntry = entries.get(pattern);
     if (!currentEntry) return;
 
@@ -53,68 +59,94 @@ export const TruthTableEditor: React.FC = () => {
     else if (currentValue === true) newValue = 'x';
     else newValue = false;
 
-    // Create a new Map to trigger store update
     const newEntries = new Map(entries);
     newEntries.set(pattern, { ...currentEntry, [outputName]: newValue });
 
-    appStore.update((state) => {
-      if (state.truthTable) state.truthTable.entries = newEntries;
-    });
+    appStore.set((state) => ({
+      ...state,
+      truthTable: state.truthTable
+        ? { ...state.truthTable, entries: newEntries }
+        : state.truthTable,
+    }));
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent, pattern: string, outputName: string) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleToggleOutput(pattern, outputName);
+    }
   };
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex justify-between items-center">
-        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-          Truth Table
-        </label>
-        <button
+      <div className="flex justify-between items-center bg-transparent">
+        <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Truth Table</h3>
+        <Button
+          variant="ghost"
           onClick={handleReset}
-          className="text-[10px] text-gray-400 hover:text-red-400 transition-colors uppercase font-bold tracking-wider"
+          className="h-8 px-2 text-xs text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 gap-2"
+          aria-label="Reset all outputs to 0"
         >
-          Reset Outputs
-        </button>
+          <RotateCcw className="w-3 h-3" />
+          Reset
+        </Button>
       </div>
 
-      <div className="w-full overflow-x-auto border border-gray-200 dark:border-gray-800 rounded-lg scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-gray-800">
-        <table className="w-full text-left border-collapse min-w-max">
-          <thead>
-            <tr className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
-              {inputVariables.map((name) => (
-                <th key={name} className="px-4 py-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-r border-gray-200 dark:border-gray-800">
-                  {name}
-                </th>
-              ))}
-              {outputVariables.map((name) => (
-                <th key={name} className="px-4 py-2 text-[10px] font-bold text-blue-500 uppercase tracking-widest">
-                  {name}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
-            {Array.from(entries.entries()).map(([pattern, outputs]) => (
-              <tr key={pattern} className="hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors">
-                {pattern.split('').map((bit, i) => (
-                  <td key={i} className="px-4 py-1.5 text-sm font-mono border-r border-gray-200 dark:border-gray-800">
-                    <span className={bit === '1' ? 'text-gray-900 dark:text-gray-100' : 'text-gray-300 dark:text-gray-700'}>
-                      {bit}
-                    </span>
-                  </td>
+      <div className="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden bg-white dark:bg-gray-900 shadow-sm">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-800">
+                {inputVariables.map((name) => (
+                  <th
+                    key={name}
+                    className="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 border-r border-gray-200 dark:border-gray-800/50 last:border-r-0 w-12 text-center"
+                  >
+                    {name}
+                  </th>
                 ))}
                 {outputVariables.map((name) => (
-                  <td
+                  <th
                     key={name}
-                    className="px-4 py-1.5 text-sm font-mono cursor-pointer select-none"
-                    onClick={() => handleToggleOutput(pattern, name)}
+                    className="px-4 py-3 text-xs font-semibold text-blue-600 dark:text-blue-400 w-16 text-center bg-blue-50/5 dark:bg-blue-900/10 border-l border-gray-200 dark:border-gray-800"
                   >
-                    {renderValue(outputs[name])}
-                  </td>
+                    {name}
+                  </th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+              {Array.from(entries.entries()).map(([pattern, outputs]) => (
+                <tr
+                  key={pattern}
+                  className="group hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                >
+                  {pattern.split('').map((bit, i) => (
+                    <td
+                      key={i}
+                      className="px-4 py-2 text-sm font-mono text-center border-r border-gray-100 dark:border-gray-800 last:border-r-0 text-gray-600 dark:text-gray-400"
+                    >
+                      {bit}
+                    </td>
+                  ))}
+                  {outputVariables.map((name) => (
+                    <td
+                      key={name}
+                      className="px-4 py-2 text-center border-l border-gray-100 dark:border-gray-800 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 transition-colors"
+                      onClick={() => handleToggleOutput(pattern, name)}
+                      onKeyDown={(e) => handleKeyDown(e, pattern, name)}
+                      tabIndex={0}
+                      role="button"
+                      aria-label={`Toggle output ${name} for input ${pattern}, current value ${outputs[name]}`}
+                    >
+                      {renderValue(outputs[name])}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

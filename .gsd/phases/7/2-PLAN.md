@@ -7,9 +7,11 @@ wave: 1
 # Plan 7.2: Variable Management UI
 
 ## Objective
+
 Provide a UI to manage input and output variables when in Truth Table mode, and automatically initialize the table.
 
 ## Context
+
 - .gsd/SPEC.md
 - src/store/index.ts
 - src/components/editor/VariableManager.tsx
@@ -55,5 +57,6 @@ Provide a UI to manage input and output variables when in Truth Table mode, and 
 </task>
 
 ## Success Criteria
+
 - [ ] Users can manage variable names and count.
 - [ ] Truth table automatically expands/shrinks based on input variable count.

@@ -84,7 +84,7 @@ export function minimizeSOP(truthTable: TruthTable): OptimizationResult[] {
   const selectedPIs = Array.from(finalPIIndices).map((idx) => pis[idx]);
 
   // 4. Group results by output
-  return outputVariables.map((_, index) => {
+  return outputVariables.map((outputName, index) => {
     const mask = 1 << index;
     const outputPIs = selectedPIs
       .filter((pi) => (pi.outputMask & mask) !== 0)
@@ -92,6 +92,7 @@ export function minimizeSOP(truthTable: TruthTable): OptimizationResult[] {
 
     return {
       outputIndex: index,
+      outputVariable: outputName,
       implicants: outputPIs,
       optimizedExpression: implicantsToExpression(outputPIs, inputVariables),
     };
@@ -110,7 +111,7 @@ export function implicantsToExpression(patterns: string[], vars: string[]): stri
       if (p[i] === '1') literals.push(vars[i]);
       if (p[i] === '0') literals.push(`¬${vars[i]}`);
     }
-    return literals.length === 0 ? '1' : literals.join('');
+    return literals.length === 0 ? '1' : literals.join('・');
   });
 
   if (terms.includes('1')) return '1';

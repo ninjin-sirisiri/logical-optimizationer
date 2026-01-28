@@ -7,9 +7,11 @@ wave: 1
 # Plan 6.1: Setup and State Management
 
 ## Objective
+
 Install dependency and setup a centralized state management system using `@simplestack/store` to coordinate between the expression editor, truth table, and optimization engine.
 
 ## Context
+
 - .gsd/SPEC.md
 - .gsd/DECISIONS.md (ADR-027, ADR-028)
 - src/core/truth-table/types.ts (TruthTable definition)
@@ -44,5 +46,6 @@ Install dependency and setup a centralized state management system using `@simpl
 </task>
 
 ## Success Criteria
+
 - [ ] `@simplestack/store` is successfully installed.
 - [ ] A central store is available to the application with full type safety.

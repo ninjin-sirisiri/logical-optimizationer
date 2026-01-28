@@ -1,12 +1,11 @@
-import React, { useRef } from 'react';
 import { useStoreValue } from '@simplestack/store/react';
+import React, { useRef } from 'react';
+
 import { appStore } from '../../store';
-import { Play } from 'lucide-react';
-import { useOptimize } from '../../hooks/useOptimize';
+import { Button } from '../ui/Button';
 
 export const ExpressionEditor: React.FC = () => {
   const { expression } = useStoreValue(appStore);
-  const { optimize } = useOptimize();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -31,49 +30,44 @@ export const ExpressionEditor: React.FC = () => {
     }, 0);
   };
 
-  const handleOptimize = () => {
-    optimize();
-  };
-
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+        <label
+          htmlFor="expression-input"
+          className="text-sm font-medium text-gray-900 dark:text-gray-100"
+        >
           Logic Expression
         </label>
-        <div className="flex gap-1">
+        <div className="flex gap-1" role="toolbar" aria-label="Symbol insertion">
           {['¬', '・', '+', '⊕', '(', ')'].map((symbol) => (
-            <button
+            <Button
               key={symbol}
+              variant="secondary"
               onClick={() => insertSymbol(symbol)}
-              className="w-8 h-8 flex items-center justify-center text-sm border border-gray-200 dark:border-gray-800 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors font-mono"
+              className="w-8 h-8 p-0 text-base font-mono"
+              title={`Insert ${symbol}`}
             >
               {symbol}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
 
-      <div className="relative">
+      <div className="relative group">
         <textarea
+          id="expression-input"
           ref={textareaRef}
           value={expression}
           onChange={handleChange}
           placeholder="e.g. A & B | ~C"
-          className="w-full h-32 p-4 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-lg text-lg font-mono placeholder:text-gray-300 dark:placeholder:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all resize-none"
+          className="w-full h-32 p-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg text-lg font-mono placeholder:text-gray-400 dark:placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all resize-none shadow-sm"
+          spellCheck={false}
         />
-
-        <button
-          onClick={handleOptimize}
-          className="absolute bottom-4 right-4 h-9 px-4 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-md flex items-center gap-2 text-sm font-medium hover:bg-gray-800 dark:hover:bg-white transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 dark:focus:ring-offset-gray-900"
-        >
-          <Play className="w-4 h-4 fill-current" />
-          Optimize
-        </button>
       </div>
 
-      <p className="text-[10px] text-gray-400">
-        Tip: You can use standard symbols like & (AND), | (OR), ~ (NOT), ^ (XOR).
+      <p className="text-xs text-gray-500 dark:text-gray-400">
+        Supported operators: AND (・, &), OR (+, |), NOT (¬, ~), XOR (⊕, ^)
       </p>
     </div>
   );
