@@ -10,7 +10,7 @@
 - [ ] 論理式の最適化（SOP/POS）
 - [ ] 使用ゲートのカスタム選択
 - [ ] 複数出力の共通項抽出
-- [ ] WebベースのUI
+- [x] WebベースのUI
 
 ## Phases
 
@@ -107,7 +107,7 @@
 
 ### Phase 6: WebUI の実装
 
-**Status**: 🚧 In Progress
+**Status**: ✅ Complete
 **Objective**: 直感的で使いやすいWebインターフェースを構築
 
 **Deliverables**:
