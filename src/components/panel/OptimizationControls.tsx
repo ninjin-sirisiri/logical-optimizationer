@@ -5,6 +5,7 @@ import React from 'react';
 import { useOptimize } from '../../hooks/useOptimize';
 import { cn } from '../../lib/utils';
 import { appStore, type OptimizationMode, type GateSet } from '../../store';
+import { GateSelector } from './GateSelector';
 import { Button } from '../ui/Button';
 
 export const OptimizationControls: React.FC = () => {
@@ -52,6 +53,7 @@ export const OptimizationControls: React.FC = () => {
             { id: 'default', label: 'Default (AND/OR/NOT)' },
             { id: 'nand', label: 'NAND Only' },
             { id: 'nor', label: 'NOR Only' },
+            { id: 'custom', label: 'Custom' },
           ].map((set) => (
             <button
               key={set.id}
@@ -68,6 +70,7 @@ export const OptimizationControls: React.FC = () => {
           ))}
         </div>
       </div>
+      {options.gateSet === 'custom' && <GateSelector />}
       <div className="pt-2">
         <Button onClick={() => optimize()} className="w-full shadow-sm">
           <Play className="w-4 h-4 mr-2 fill-current" />

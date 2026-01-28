@@ -1,5 +1,5 @@
 import { convertASTToCircuit } from '../core/circuit/converter';
-import { toNANDOnly, toNOROnly } from '../core/circuit/transformers';
+import { toNANDOnly, toNOROnly, toCustomGateSet } from '../core/circuit/transformers';
 import { minimize } from '../core/optimizer';
 import { parse } from '../core/parser';
 import { expressionToTruthTable } from '../core/truth-table';
@@ -47,6 +47,8 @@ export const useOptimize = () => {
         circuit = toNANDOnly(circuit);
       } else if (options.gateSet === 'nor') {
         circuit = toNOROnly(circuit);
+      } else if (options.gateSet === 'custom') {
+        circuit = toCustomGateSet(circuit, options.enabledGates);
       }
 
       // 5. Update store

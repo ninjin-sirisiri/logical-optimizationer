@@ -138,7 +138,7 @@
 
 ### Phase 8: 詳細なゲート選択機能の実装
 
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: ユーザーが使用可能な論理ゲートを個別に指定できるようにし、その制約下での最適化・変換結果を表示する
 
 **Deliverables**:
