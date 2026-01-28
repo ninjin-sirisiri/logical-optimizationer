@@ -3,14 +3,14 @@ import { type ASTNode, TokenType, ParseError, type BinaryOperator } from './type
 
 // Precedence (Binding Power)
 // OR < XOR < AND < NOT
-const INFIX_BP: Record<string, [number, number]> = {
-  '+': [1, 2], // OR - Left associative
-  '⊕': [3, 4], // XOR - Left associative
-  '・': [5, 6], // AND - Left associative
+const INFIX_BP: Partial<Record<TokenType, [number, number]>> = {
+  [TokenType.Or]: [1, 2], // OR - Left associative
+  [TokenType.Xor]: [3, 4], // XOR - Left associative
+  [TokenType.And]: [5, 6], // AND - Left associative
 };
 
-const PREFIX_BP: Record<string, number> = {
-  '¬': 7, // NOT
+const PREFIX_BP: Partial<Record<TokenType, number>> = {
+  [TokenType.Not]: 7, // NOT
 };
 
 export class Parser {
@@ -41,7 +41,7 @@ export class Parser {
         break;
       }
 
-      const bp = INFIX_BP[opToken.value];
+      const bp = INFIX_BP[opToken.type];
       if (!bp) {
         // Not an infix operator we recognize here
         break;
@@ -78,7 +78,7 @@ export class Parser {
         return { type: 'constant', value: token.value === '1' };
 
       case TokenType.Not: {
-        const bp = PREFIX_BP['¬'];
+        const bp = PREFIX_BP[TokenType.Not]!;
         const operand = this.parseExpression(bp);
         return { type: 'unary', operator: 'not', operand };
       }

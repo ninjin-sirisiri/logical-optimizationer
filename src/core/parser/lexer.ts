@@ -39,19 +39,19 @@ export class Lexer {
     const char = this.input[this.position];
 
     // Single character operators
-    if (char === '・') {
+    if (char === '・' || char === '&' || char === '*') {
       this.position++;
       return { type: TokenType.And, value: char, position: start };
     }
-    if (char === '+') {
+    if (char === '+' || char === '|') {
       this.position++;
       return { type: TokenType.Or, value: char, position: start };
     }
-    if (char === '¬') {
+    if (char === '¬' || char === '~' || char === '!') {
       this.position++;
       return { type: TokenType.Not, value: char, position: start };
     }
-    if (char === '⊕') {
+    if (char === '⊕' || char === '^') {
       this.position++;
       return { type: TokenType.Xor, value: char, position: start };
     }

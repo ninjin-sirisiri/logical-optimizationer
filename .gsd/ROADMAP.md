@@ -1,6 +1,6 @@
 # ROADMAP.md
 
-> **Current Phase**: 5
+> **Current Phase**: 6
 > **Milestone**: v1.0 — 組み合わせ回路の最適化
 
 ## Must-Haves (from SPEC)
@@ -86,7 +86,7 @@
 
 ### Phase 5: ゲート変換機能
 
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: 最適化された論理式を指定されたゲートのみを使用する形式に変換
 
 **Deliverables**:
