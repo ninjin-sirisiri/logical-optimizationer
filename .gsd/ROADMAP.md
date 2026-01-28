@@ -1,6 +1,6 @@
 # ROADMAP.md
 
-> **Current Phase**: Not started
+> **Current Phase**: 4
 > **Milestone**: v1.0 — 組み合わせ回路の最適化
 
 ## Must-Haves (from SPEC)
@@ -50,7 +50,7 @@
 
 ### Phase 3: 真理値表の処理
 
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: 真理値表の入力・表示と、論理式との相互変換を実装
 
 **Deliverables**:
