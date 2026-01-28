@@ -2,20 +2,21 @@
 
 ## Current Position
 
-- **Phase**: 4 (completed)
-- **Task**: All tasks complete
-- **Status**: Verified
+- **Phase**: 5
+- **Task**: Planning complete
+- **Status**: Ready for execution
 
 ## Last Session Summary
 
-Phase 4 executed successfully. 4 plans executed, 11 tasks completed.
-The logic optimization engine (QM + Petrick's) is fully implemented and verified with integration tests.
-
-**Maintenance**:
-- Performed linting and formatting across the codebase using `oxlint` and `oxfmt`.
-- Fixed warnings regarding array mutation (`toSorted()`), unused variables (including `name` in `optimizer/index.ts`), and function scoping.
+- Completed Phase 5 (Gate Conversion) discussion.
+- Decisions documented in `DECISIONS.md`:
+  - Defined `GateNode` and DAG-based circuit representation.
+  - Adopted template-based recursive substitution for gate conversion.
+  - Implemented peephole optimization for cleanup (e.g., double negation removal).
+  - Clarified handling of common sub-expressions and fan-outs via DAG.
 
 ## Next Steps
 
-1. Proceed to Phase 5: ゲート変換機能
-2. Create execution plans for Phase 5.
+1. `/plan 5` — Create execution plans for Phase 5 implementation.
+2. Implement `GateNode` types and `Circuit` interface.
+3. Implement core gate conversion logic and optimization passes.
