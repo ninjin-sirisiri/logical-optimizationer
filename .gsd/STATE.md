@@ -14,4 +14,5 @@
 
 ## Next Steps
 
-1. /execute 7 (Phase 7: 統合テストとポリッシュ)
+1. /plan 7 (Phase 7: 真理値表ベースの入力定義機能)
+2. /execute 7
