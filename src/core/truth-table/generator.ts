@@ -28,7 +28,7 @@ import { generateAllPatterns, patternToAssignment, validateVariableCount } from 
  */
 export function generateTruthTable(ast: ASTNode, outputName = 'Y'): TruthTable {
   // Extract and sort input variables
-  const inputVariables = extractVariables(ast).sort();
+  const inputVariables = extractVariables(ast).toSorted();
 
   // Validate variable count
   validateVariableCount(inputVariables.length);
