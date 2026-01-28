@@ -79,7 +79,7 @@ const loadState = (): AppState => {
 export const appStore = store(loadState());
 
 // Persistence middleware
-appStore.onChange((state) => {
+appStore.subscribe((state) => {
   try {
     const toSave = {
       expression: state.expression,
