@@ -178,6 +178,9 @@ export function toCustomGateSet(circuit: Circuit, enabledGates: Record<string, b
       return builder.addGate(type as any, inputs);
     }
 
+    // Helper to check if a gate type is synthesizable (even if not directly enabled)
+    const canSynthesizeNOT = enabledGates.not || enabledGates.nand || enabledGates.nor;
+
     // Decompositions
     switch (type) {
       case 'not':
@@ -194,6 +197,12 @@ export function toCustomGateSet(circuit: Circuit, enabledGates: Record<string, b
           const nots = inputs.map((i) => synthesize('not', [i]));
           return builder.addGate('nor', nots);
         }
+        // De Morgan: A & B = ~(~A | ~B)
+        if (enabledGates.or && canSynthesizeNOT) {
+          const nots = inputs.map((i) => synthesize('not', [i]));
+          const or = builder.addGate('or', nots);
+          return synthesize('not', [or]);
+        }
         throw new Error('Cannot synthesize AND gate with current enabled gates.');
 
       case 'or':
@@ -204,6 +213,12 @@ export function toCustomGateSet(circuit: Circuit, enabledGates: Record<string, b
         if (enabledGates.nand) {
           const nots = inputs.map((i) => synthesize('not', [i]));
           return builder.addGate('nand', nots);
+        }
+        // De Morgan: A | B = ~(~A & ~B)
+        if (enabledGates.and && canSynthesizeNOT) {
+          const nots = inputs.map((i) => synthesize('not', [i]));
+          const and = builder.addGate('and', nots);
+          return synthesize('not', [and]);
         }
         throw new Error('Cannot synthesize OR gate with current enabled gates.');
 

@@ -1,9 +1,10 @@
 import { useStoreValue } from '@simplestack/store/react';
 import React from 'react';
 
+import type { GateType } from '../../core/circuit/types';
+
 import { cn } from '../../lib/utils';
 import { appStore } from '../../store';
-import type { GateType } from '../../core/circuit/types';
 
 export const GateSelector: React.FC = () => {
   const { options } = useStoreValue(appStore);

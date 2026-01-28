@@ -5,8 +5,8 @@ import React from 'react';
 import { useOptimize } from '../../hooks/useOptimize';
 import { cn } from '../../lib/utils';
 import { appStore, type OptimizationMode, type GateSet } from '../../store';
-import { GateSelector } from './GateSelector';
 import { Button } from '../ui/Button';
+import { GateSelector } from './GateSelector';
 
 export const OptimizationControls: React.FC = () => {
   const { options } = useStoreValue(appStore);
