@@ -54,3 +54,21 @@
 ### Next Step
 
 - `/plan 2` で Phase 2（論理式パーサー実装）のプランを作成
+
+---
+
+## 2026-01-28: TypeScript 型インポートの修正 (verbatimModuleSyntax)
+
+### Session Summary
+
+`tsconfig.app.json` で `verbatimModuleSyntax` が有効になっているため、型のみのインポートには `import type` を使用する必要があるというエラーを修正しました。
+
+### What We Changed
+
+- `src/core/parser/evaluate.ts`, `lexer.ts`, `parser.ts`, `index.ts` のインポート文を修正。
+- `import { type ASTNode, ... }` または `import type { ASTNode }` の形式に統一。
+- `bun x tsc --noEmit` により全ファイルで型エラーがないことを確認。
+
+### Key Decisions
+
+- TypeScript 5.0+ の `verbatimModuleSyntax` 設定に準拠し、型安全かつランタイムに影響を与えないインポート方法を徹底。

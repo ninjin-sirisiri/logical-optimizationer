@@ -1,4 +1,4 @@
-import { ASTNode, EvaluationError } from './types';
+import { type ASTNode, EvaluationError } from './types';
 
 export type VariableAssignment = Record<string, boolean>;
 

@@ -1,10 +1,13 @@
-import { Token, TokenType, ParseError } from './types';
+import { type Token, TokenType, ParseError } from './types';
 
 export class Lexer {
+  private input: string;
   private position = 0;
   private currentToken: Token | null = null;
 
-  constructor(private input: string) {}
+  constructor(input: string) {
+    this.input = input;
+  }
 
   public peek(): Token {
     if (!this.currentToken) {

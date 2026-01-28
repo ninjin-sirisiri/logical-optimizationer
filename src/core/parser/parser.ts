@@ -1,5 +1,5 @@
 import { Lexer } from './lexer';
-import { ASTNode, TokenType, ParseError, BinaryOperator } from './types';
+import { type ASTNode, TokenType, ParseError, type BinaryOperator } from './types';
 
 // Precedence (Binding Power)
 // OR < XOR < AND < NOT
@@ -14,7 +14,11 @@ const PREFIX_BP: Record<string, number> = {
 };
 
 export class Parser {
-  constructor(private lexer: Lexer) {}
+  private lexer: Lexer;
+
+  constructor(lexer: Lexer) {
+    this.lexer = lexer;
+  }
 
   public parse(): ASTNode {
     const node = this.parseExpression(0);

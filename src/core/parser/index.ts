@@ -1,7 +1,8 @@
-import { evaluate, extractVariables, VariableAssignment } from './evaluate';
+import type { ASTNode } from './types';
+
+import { evaluate, extractVariables, type VariableAssignment } from './evaluate';
 import { Lexer } from './lexer';
 import { Parser } from './parser';
-import { ASTNode } from './types';
 
 export * from './types';
 export * from './lexer';
