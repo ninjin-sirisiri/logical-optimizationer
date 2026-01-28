@@ -107,7 +107,7 @@
 
 ### Phase 6: WebUI の実装
 
-**Status**: ⬜ Not Started
+**Status**: 🚧 In Progress
 **Objective**: 直感的で使いやすいWebインターフェースを構築
 
 **Deliverables**:

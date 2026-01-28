@@ -6,11 +6,11 @@
 - **Task**: Planning complete
 - **Status**: Ready for execution
 
-## Last Session Summary
-
-### Phase 6 Planned
-- Created 4 atomic plans covering store setup, layout, editor, truth table, and results.
-- Integrated `@simplestack/store` and Mu design guidelines into the plans.
+### Phase 6 Implementation & Bug Fix
+- Fixed a critical import error where `useStore` was used instead of `useStoreValue` from `@simplestack/store/react`.
+- Updated 5 components/hooks: `ExpressionEditor`, `OptimizationControls`, `ResultView`, `TruthTableEditor`, and `useOptimize`.
+- Verified the fix with `npm run typecheck`.
+- Core UI components are ready for further polish and integration.
 
 ## Next Steps
 

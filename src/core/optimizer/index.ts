@@ -108,7 +108,7 @@ export function implicantsToExpression(patterns: string[], vars: string[]): stri
     const literals = [];
     for (let i = 0; i < p.length; i++) {
       if (p[i] === '1') literals.push(vars[i]);
-      if (p[i] === '0') literals.push(`${vars[i]}'`);
+      if (p[i] === '0') literals.push(`¬${vars[i]}`);
     }
     return literals.length === 0 ? '1' : literals.join('');
   });

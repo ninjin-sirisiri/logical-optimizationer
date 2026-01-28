@@ -28,7 +28,7 @@ describe('Logic Optimizer Integration', () => {
     // XOR cannot be simplified into simpler PIs than the minterms themselves (it's "full")
     expect(results[0].implicants).toHaveLength(4);
     // Optimized expression should contain the minterms
-    expect(results[0].optimizedExpression).toContain("A'B'C");
+    expect(results[0].optimizedExpression).toContain('¬A¬BC');
     expect(results[0].optimizedExpression).toContain('ABC');
   });
 
