@@ -1,6 +1,6 @@
 # ROADMAP.md
 
-> **Current Phase**: 4
+> **Current Phase**: 5
 > **Milestone**: v1.0 — 組み合わせ回路の最適化
 
 ## Must-Haves (from SPEC)
@@ -65,7 +65,7 @@
 
 ### Phase 4: 論理式の最適化エンジン
 
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: Quine-McCluskey法 または 同等のアルゴリズムで論理式を最適化
 
 **Deliverables**:
