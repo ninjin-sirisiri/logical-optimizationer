@@ -346,3 +346,152 @@ interface ParseError {
 - 複雑な回復ロジックは不要
 - 必要に応じて後から拡張可能
 - 入力は比較的短いため、最初のエラーで停止しても問題ない
+
+---
+
+## Phase 3 Decisions
+
+**Date**: 2026-01-28
+
+### ADR-014: 真理値表のデータ構造 — マップベース設計
+
+**Status**: Accepted
+
+#### Context
+
+真理値表のデータ構造を配列ベースにするかマップベースにするか。
+
+#### Options Considered
+
+1. **配列ベース**: `{ variables: string[], rows: { inputs: boolean[], output: boolean }[] }`
+2. **マップベース**: `{ variables: string[], outputs: Map<string, OutputValue> }`
+
+#### Decision
+
+**マップベース（Option B）** を選択。
+
+#### Rationale
+
+- Don't Care（未定義値）を効率的に表現できる
+- スパースな真理値表（大部分がDon't Care）をメモリ効率よく扱える
+- 複数出力への拡張が容易
+- 特定の入力組み合わせへの高速アクセスが可能
+
+---
+
+### ADR-015: 複数出力のサポート
+
+**Status**: Accepted
+
+#### Context
+
+真理値表で複数の出力変数をサポートするか。
+
+#### Decision
+
+**Phase 3 から複数出力を考慮した設計**を行う。
+
+#### Design
+
+```typescript
+interface TruthTable {
+  inputVariables: string[];           // 入力変数名（順序付き）
+  outputVariables: string[];          // 出力変数名（順序付き）
+  entries: Map<string, OutputEntry>;  // 入力パターン -> 出力値
+}
+
+type OutputValue = boolean | 'x';     // true, false, または don't care
+
+interface OutputEntry {
+  [outputName: string]: OutputValue;
+}
+```
+
+#### Rationale
+
+- Phase 4（最適化）で複数出力の共通項抽出が必要
+- SPECの「複数出力の共通項抽出」に対応
+- 後から設計変更するよりも最初から対応する方が効率的
+
+---
+
+### ADR-016: Don't Care（未定義値）のサポート
+
+**Status**: Accepted
+
+#### Context
+
+真理値表でDon't Care（'x'）をサポートするか。
+
+#### Decision
+
+**Phase 3 から Don't Care を設計に含める**。
+
+#### Representation
+
+- 入力側: マップに存在しないエントリ = Don't Care として扱う
+- 出力側: `'x'` リテラル値で明示的に表現
+
+#### Rationale
+
+- Phase 4 の Quine-McCluskey 法で Don't Care が最適化に重要
+- ハードウェア設計では実際に頻繁に使用される
+- 最初から設計に含めることで後からの変更を回避
+
+---
+
+### ADR-017: 変数数の上限
+
+**Status**: Accepted
+
+#### Context
+
+UIで扱える入力変数の最大数を定めるか。
+
+#### Decision
+
+**入力変数の上限を 10 変数**とする。
+
+| 変数数 | 行数（最大） | 判断         |
+| ------ | ------------ | ------------ |
+| 8      | 256          | ✓ 快適       |
+| 10     | 1,024        | ✓ **UI上限** |
+| 12     | 4,096        | ✗ 過負荷     |
+
+#### Implementation
+
+- **UIコンポーネント**: 10変数を超える入力を警告/拒否
+- **コアロジック**: 制限なし（計算可能な範囲で処理）
+- 必要に応じてページネーションや仮想スクロールで大きなテーブルに対応
+
+#### Rationale
+
+- 1,024行はスクロール可能だがユーザビリティの限界
+- 教育・学習目的では10変数で十分
+- ブラウザのパフォーマンスを考慮
+
+---
+
+### ADR-018: Phase 3 での簡易UIの実装
+
+**Status**: Accepted
+
+#### Context
+
+UIコンポーネントを Phase 3 で実装するか、Phase 6 まで待つか。
+
+#### Decision
+
+**Phase 3 で簡易的なUIコンポーネントを実装**する。
+
+#### Scope
+
+- 真理値表の表示コンポーネント
+- 基本的なインタラクション（行の選択、出力値の切り替え）
+- スタイリングはシンプルに（Phase 6 でポリッシュ）
+
+#### Rationale
+
+- コア機能のテストと検証が視覚的に行える
+- 早期のフィードバックが得られる
+- Phase 6 では他のUI要素との統合に集中できる
