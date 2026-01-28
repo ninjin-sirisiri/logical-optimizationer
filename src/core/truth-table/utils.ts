@@ -103,3 +103,34 @@ export function validateVariableCount(count: number): void {
     );
   }
 }
+import type { TruthTable, OutputEntry } from './types';
+
+/**
+ * Creates an empty truth table for given input and output variables.
+ * All output values are initialized to false.
+ *
+ * @param inputVariables - List of input variable names
+ * @param outputVariables - List of output variable names
+ * @returns Initialized truth table
+ */
+export function createEmptyTruthTable(
+  inputVariables: string[],
+  outputVariables: string[],
+): TruthTable {
+  const patterns = generateAllPatterns(inputVariables.length);
+  const entries = new Map<string, OutputEntry>();
+
+  for (const pattern of patterns) {
+    const outputs: OutputEntry = {};
+    for (const outVar of outputVariables) {
+      outputs[outVar] = false;
+    }
+    entries.set(pattern, outputs);
+  }
+
+  return {
+    inputVariables,
+    outputVariables,
+    entries,
+  };
+}

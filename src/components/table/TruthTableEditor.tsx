@@ -23,8 +23,26 @@ export const TruthTableEditor: React.FC = () => {
 
   const { inputVariables, outputVariables, entries } = truthTable;
 
+  const handleReset = () => {
+    const newEntries = new Map(entries);
+    for (const [pattern, outputs] of newEntries) {
+      const newOutputs = { ...outputs };
+      for (const outVar of outputVariables) {
+        newOutputs[outVar] = false;
+      }
+      newEntries.set(pattern, newOutputs);
+    }
+
+    appStore.update((state) => {
+      if (state.truthTable) {
+        state.truthTable.entries = newEntries;
+      }
+    });
+  };
+
   // Toggle output value: 0 -> 1 -> x -> 0
   const handleToggleOutput = (pattern: string, outputName: string) => {
+    // ... existing logic ...
     const currentEntry = entries.get(pattern);
     if (!currentEntry) return;
 
@@ -39,20 +57,24 @@ export const TruthTableEditor: React.FC = () => {
     const newEntries = new Map(entries);
     newEntries.set(pattern, { ...currentEntry, [outputName]: newValue });
 
-    appStore.set((state) => ({
-      ...state,
-      truthTable: {
-        ...truthTable,
-        entries: newEntries,
-      },
-    }));
+    appStore.update((state) => {
+      if (state.truthTable) state.truthTable.entries = newEntries;
+    });
   };
 
   return (
     <div className="flex flex-col gap-4">
-      <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-        Truth Table
-      </label>
+      <div className="flex justify-between items-center">
+        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+          Truth Table
+        </label>
+        <button
+          onClick={handleReset}
+          className="text-[10px] text-gray-400 hover:text-red-400 transition-colors uppercase font-bold tracking-wider"
+        >
+          Reset Outputs
+        </button>
+      </div>
 
       <div className="w-full overflow-x-auto border border-gray-200 dark:border-gray-800 rounded-lg scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-gray-800">
         <table className="w-full text-left border-collapse min-w-max">

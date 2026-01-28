@@ -8,25 +8,41 @@ import { expressionToTruthTable } from '../core/truth-table';
 import { appStore } from '../store';
 
 export const useOptimize = () => {
-  const { expression, options } = useStoreValue(appStore);
+  const { expression, inputMode, truthTable, options } = useStoreValue(appStore);
 
   const optimize = () => {
-    if (!expression.trim()) return;
-
     try {
-      // 1. Generate truth table from expression
-      const table = expressionToTruthTable(expression);
+      let table = truthTable;
+
+      // 1. Determine source of Truth Table
+      if (inputMode === 'expression') {
+        if (!expression.trim()) return;
+        table = expressionToTruthTable(expression);
+      } else {
+        // Table mode: ensure table exists
+        if (!table) return;
+      }
+
+      if (!table) return;
 
       // 2. Run core optimizer
       const results = minimize(table, options.mode);
 
-      // We assume single output for now (Y)
-      const primaryResult = results[0];
-      const optimizedStr = primaryResult.optimizedExpression;
+      // Handle multiple outputs by joining them
+      // TODO: Update store to support structured multiple outputs
+      const optimizedStr = results
+        .map((r) => `${r.outputVariable} = ${r.optimizedExpression}`)
+        .join('\n');
 
       // 3. Convert optimized result to Circuit
-      const optimizedAST = parse(optimizedStr);
-      let circuit = convertASTToCircuit({ Y: optimizedAST });
+      // Convert all outputs to ASTs and merge into one Circuit
+      const circuitInputs: Record<string, any> = {};
+
+      for (const res of results) {
+        circuitInputs[res.outputVariable] = parse(res.optimizedExpression);
+      }
+
+      let circuit = convertASTToCircuit(circuitInputs);
 
       // 4. Transform gate sets if requested
       if (options.gateSet === 'nand') {
@@ -38,7 +54,8 @@ export const useOptimize = () => {
       // 5. Update store
       appStore.set((state) => ({
         ...state,
-        truthTable: table,
+        // Only update truth table if generated from expression
+        truthTable: inputMode === 'expression' ? table : state.truthTable,
         results: {
           optimizedExpression: optimizedStr,
           circuit: circuit,

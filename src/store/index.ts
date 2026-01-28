@@ -6,8 +6,11 @@ import type { TruthTable } from '../core/truth-table/types';
 export type OptimizationMode = 'SOP' | 'POS';
 export type GateSet = 'default' | 'nand' | 'nor';
 
+export type InputMode = 'expression' | 'table';
+
 export interface AppState {
   expression: string;
+  inputMode: InputMode;
   truthTable: TruthTable | null;
   results: {
     optimizedExpression: string | null;
@@ -21,6 +24,7 @@ export interface AppState {
 
 const initialState: AppState = {
   expression: '',
+  inputMode: 'expression',
   truthTable: null,
   results: {
     optimizedExpression: null,
