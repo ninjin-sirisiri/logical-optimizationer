@@ -34,41 +34,40 @@ mintermベースの変換は以下の手順で行う：
 ```typescript
 function truthTableToSOP(table: TruthTable, outputVar: string): ASTNode | null {
   const minterms: ASTNode[] = [];
-  
+
   for (const [pattern, outputs] of table.entries) {
     if (outputs[outputVar] === true) {
       const minterm = createMinterm(table.inputVariables, pattern);
       minterms.push(minterm);
     }
   }
-  
+
   if (minterms.length === 0) return { type: 'constant', value: false };
   return minterms.reduce((acc, term) => ({
     type: 'binary',
     operator: 'or',
     left: acc,
-    right: term
+    right: term,
   }));
 }
 
 function createMinterm(variables: string[], pattern: string): ASTNode {
   const terms: ASTNode[] = variables.map((v, i) => {
     const node: ASTNode = { type: 'variable', name: v };
-    return pattern[i] === '0' 
-      ? { type: 'unary', operator: 'not', operand: node }
-      : node;
+    return pattern[i] === '0' ? { type: 'unary', operator: 'not', operand: node } : node;
   });
-  
+
   return terms.reduce((acc, term) => ({
     type: 'binary',
     operator: 'and',
     left: acc,
-    right: term
+    right: term,
   }));
 }
 ```
 
 **重要ポイント:**
+
 - この段階では最適化は行わない（Phase 4のQuine-McCluskey法で実施）
 - 空の真理値表（全て0）は定数 `false` を返す
 - 全て1の真理値表は定数 `true` を返すか、すべてのmintermをOR結合
@@ -88,36 +87,34 @@ function createMinterm(variables: string[], pattern: string): ASTNode {
 **実装例（TypeScript）:**
 
 ```typescript
-function expressionToTruthTable(
-  ast: ASTNode, 
-  outputName: string = 'Y'
-): TruthTable {
+function expressionToTruthTable(ast: ASTNode, outputName: string = 'Y'): TruthTable {
   const variables = extractVariables(ast);
   const n = variables.length;
   const entries = new Map<string, OutputEntry>();
-  
+
   // 2^n パターンを生成
-  for (let i = 0; i < (1 << n); i++) {
+  for (let i = 0; i < 1 << n; i++) {
     const pattern = i.toString(2).padStart(n, '0');
     const assignment: VariableAssignment = {};
-    
+
     for (let j = 0; j < n; j++) {
       assignment[variables[j]] = pattern[j] === '1';
     }
-    
+
     const result = evaluate(ast, assignment);
     entries.set(pattern, { [outputName]: result });
   }
-  
+
   return {
     inputVariables: variables,
     outputVariables: [outputName],
-    entries
+    entries,
   };
 }
 ```
 
 **パフォーマンス考慮:**
+
 - 10変数 = 1,024評価 → 瞬時
 - 15変数 = 32,768評価 → 数百ミリ秒
 - 20変数 = 1,048,576評価 → 数秒（許容範囲）
@@ -141,21 +138,23 @@ interface OutputEntry {
 
 // 真理値表のメインデータ構造
 interface TruthTable {
-  inputVariables: string[];           // 入力変数名（順序付き）
-  outputVariables: string[];          // 出力変数名（順序付き）
-  entries: Map<string, OutputEntry>;  // "010" -> { Y: true, Z: 'x' }
+  inputVariables: string[]; // 入力変数名（順序付き）
+  outputVariables: string[]; // 出力変数名（順序付き）
+  entries: Map<string, OutputEntry>; // "010" -> { Y: true, Z: 'x' }
 }
 
 // UI表示用の上限定数
-const MAX_INPUT_VARIABLES = 10;  // UI表示上限
+const MAX_INPUT_VARIABLES = 10; // UI表示上限
 ```
 
 **マップベースのメリット:**
+
 1. **スパース対応**: 未定義エントリ = 暗黙のDon't Care
 2. **高速アクセス**: O(1)でパターンから出力を取得
 3. **複数出力対応**: 各エントリに複数の出力値を格納可能
 
 **パターン文字列の仕様:**
+
 - 入力変数の順序に従って `'0'` または `'1'` を連結
 - 例: 変数 `[A, B, C]` でパターン `A=1, B=0, C=1` → `"101"`
 
@@ -176,11 +175,13 @@ const MAX_INPUT_VARIABLES = 10;  // UI表示上限
 **Phase 3での方針:**
 
 簡易UIを実装するため、**仮想化は使用しない**（8変数=256行で十分高速）：
+
 - 基本的なHTMLテーブルで実装
 - CSSで固定ヘッダー
 - 行のクリックで出力値トグル
 
 **Phase 6で検討:**
+
 - 10変数（1,024行）対応時に `@tanstack/react-virtual` を検討
 - ページネーションとの組み合わせも候補
 
@@ -242,6 +243,7 @@ src/core/truth-table/
 | (なし)     | —          | Phase 3では新規依存なし |
 
 **既存依存の活用:**
+
 - Phase 2のパーサー (`src/core/parser/`)
 - React + TypeScript（既存）
 - Tailwind CSS v4（既存）
@@ -271,19 +273,24 @@ src/core/truth-table/
 ## Implementation Checklist（計画時の参考）
 
 ### Wave 1: Types & Core
+
 - [ ] `src/core/truth-table/types.ts` — 型定義
 - [ ] `src/core/truth-table/utils.ts` — ヘルパー関数
 
 ### Wave 2: Generator
+
 - [ ] `src/core/truth-table/generator.ts` — 式→真理値表
 - [ ] テスト作成
 
 ### Wave 3: Converter
+
 - [ ] `src/core/truth-table/converter.ts` — 真理値表→SOP/POS
 - [ ] テスト作成
 
 ### Wave 4: Public API
+
 - [ ] `src/core/truth-table/index.ts` — 統合API
 
 ### Wave 5: UI Component
+
 - [ ] `src/components/TruthTable/` — 表示・編集コンポーネント

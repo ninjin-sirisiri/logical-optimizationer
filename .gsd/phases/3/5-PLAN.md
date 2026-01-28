@@ -51,6 +51,7 @@ wave: 3
     注意:
     - Phase 3では編集機能は含めない（表示のみ）
     - 仮想化は使用しない（256行まで想定）
+
   </action>
   <verify>bun run typecheck</verify>
   <done>TruthTableDisplay.tsxがエラーなくコンパイルされる</done>
@@ -84,6 +85,7 @@ wave: 3
 
     4. readOnlyモード
        - trueの場合はTruthTableDisplayと同じ動作
+
   </action>
   <verify>bun run typecheck</verify>
   <done>TruthTableEditor.tsxがエラーなくコンパイルされる</done>
@@ -108,6 +110,7 @@ wave: 3
     ├── index.ts
     ├── TruthTableDisplay.tsx
     └── TruthTableEditor.tsx
+
   </action>
   <verify>bun run typecheck</verify>
   <done>index.tsがエラーなくコンパイルされ、コンポーネントがエクスポートされている</done>
@@ -124,6 +127,7 @@ wave: 3
 ## Verification (Human)
 
 Phase 3完了後、ブラウザで以下を確認:
+
 - 真理値表が正しく表示される
 - 出力値のトグルが動作する
 - スクロール時にヘッダーが固定される

@@ -38,6 +38,7 @@ wave: 1
     - 既存のparser/types.tsのスタイルに合わせる
     - エクスポートはnamed exportを使用
     - JSDocコメントを追加
+
   </action>
   <verify>bun run typecheck</verify>
   <done>types.tsがエラーなくコンパイルされ、すべての型がエクスポートされている</done>
@@ -68,6 +69,7 @@ wave: 1
     注意:
     - parser/evaluate.tsのVariableAssignment型を再利用
     - type-onlyインポートを使用（verbatimModuleSyntax対応）
+
   </action>
   <verify>bun run typecheck</verify>
   <done>utils.tsがエラーなくコンパイルされ、すべての関数がエクスポートされている</done>
@@ -95,6 +97,7 @@ wave: 1
     4. validateVariableCount
        - 10以下 → エラーなし
        - 11以上 → TruthTableErrorをスロー
+
   </action>
   <verify>bun test src/core/truth-table/__tests__/utils.test.ts</verify>
   <done>すべてのテストがパスする</done>

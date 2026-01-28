@@ -48,6 +48,7 @@ wave: 2
     注意:
     - parser/index.tsのスタイルに合わせる
     - type-onlyインポートを適切に使用
+
   </action>
   <verify>bun run typecheck</verify>
   <done>index.tsがエラーなくコンパイルされ、すべてのAPIがエクスポートされている</done>
@@ -78,6 +79,7 @@ wave: 2
 
     5. expressionToTruthTableとtruthTableToExpressionの往復
        - 往復後に同じ真理値表が得られることを確認
+
   </action>
   <verify>bun test src/core/truth-table/__tests__/integration.test.ts</verify>
   <done>すべての統合テストがパスする</done>
@@ -99,6 +101,7 @@ wave: 2
        - bun test src/core/truth-table/
 
     4. 問題があれば修正
+
   </action>
   <verify>bun run typecheck && bun run lint && bun test src/core/truth-table/</verify>
   <done>型チェック、リンティング、テストがすべてパスする</done>

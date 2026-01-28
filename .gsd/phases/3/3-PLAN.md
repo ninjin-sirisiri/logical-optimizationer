@@ -58,6 +58,7 @@ wave: 2
     - Don't Care ('x') の出力はスキップ
     - 複数出力の場合は指定されたoutputVarのみ処理
     - 空のテーブルや全Don't Careはエラーではなく定数を返す
+
   </action>
   <verify>bun run typecheck</verify>
   <done>converter.tsがエラーなくコンパイルされ、truthTableToSOPとtruthTableToPOSがエクスポートされている</done>
@@ -92,6 +93,7 @@ wave: 2
     5. 往復変換テスト（roundtrip）
        - 式 → 真理値表 → SOP → 真理値表
        - 元の真理値表と一致することを確認
+
   </action>
   <verify>bun test src/core/truth-table/__tests__/converter.test.ts</verify>
   <done>すべてのテストがパスする</done>

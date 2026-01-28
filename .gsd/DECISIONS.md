@@ -395,12 +395,12 @@ interface ParseError {
 
 ```typescript
 interface TruthTable {
-  inputVariables: string[];           // 入力変数名（順序付き）
-  outputVariables: string[];          // 出力変数名（順序付き）
-  entries: Map<string, OutputEntry>;  // 入力パターン -> 出力値
+  inputVariables: string[]; // 入力変数名（順序付き）
+  outputVariables: string[]; // 出力変数名（順序付き）
+  entries: Map<string, OutputEntry>; // 入力パターン -> 出力値
 }
 
-type OutputValue = boolean | 'x';     // true, false, または don't care
+type OutputValue = boolean | 'x'; // true, false, または don't care
 
 interface OutputEntry {
   [outputName: string]: OutputValue;

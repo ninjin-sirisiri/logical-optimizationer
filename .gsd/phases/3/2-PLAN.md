@@ -46,6 +46,7 @@ wave: 1
     - パーサーからのインポートはtype-onlyを使用（ASTNode）
     - 評価関数は通常インポート
     - 変数名の順序はextractVariablesの戻り値順（アルファベット順）
+
   </action>
   <verify>bun run typecheck</verify>
   <done>generator.tsがエラーなくコンパイルされ、2つの生成関数がエクスポートされている</done>
@@ -79,6 +80,7 @@ wave: 1
 
     6. 文字列入力のテスト
        - generateTruthTableFromExpressionが正しく動作
+
   </action>
   <verify>bun test src/core/truth-table/__tests__/generator.test.ts</verify>
   <done>すべてのテストがパスする</done>
