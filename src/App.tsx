@@ -1,4 +1,5 @@
 import { useStoreValue } from '@simplestack/store/react';
+import { Toaster } from 'sonner';
 
 import { ExpressionEditor } from './components/editor/ExpressionEditor';
 import { InputModeToggle } from './components/editor/InputModeToggle';
@@ -14,6 +15,7 @@ function App() {
 
   return (
     <Shell>
+      <Toaster position="top-right" />
       <div className="flex flex-col gap-8 mb-12">
         <InputModeToggle />
       </div>

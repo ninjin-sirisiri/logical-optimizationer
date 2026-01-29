@@ -28,8 +28,6 @@ export const Shell: React.FC<ShellProps> = ({ children }) => {
           <p>Built for efficiency</p>
         </footer>
       </div>
-
     </div>
   );
 };
-
