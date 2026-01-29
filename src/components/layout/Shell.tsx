@@ -29,16 +29,7 @@ export const Shell: React.FC<ShellProps> = ({ children }) => {
         </footer>
       </div>
 
-      {/* Screen width warning for small screens */}
-      <div className="lg:hidden fixed inset-0 z-50 bg-white dark:bg-gray-900 flex items-center justify-center p-8">
-        <div className="max-w-xs text-center">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Mu Logic is designed for desktop productivity.
-            <br />
-            Please use a screen width of 1024px or greater.
-          </p>
-        </div>
-      </div>
     </div>
   );
 };
+
