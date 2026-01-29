@@ -95,42 +95,42 @@ const NodeRenderer: React.FC<{
 
   switch (op) {
     case 'not':
-      return (
+      return wrapWithColor(
         <span className="inline-flex items-baseline">
-          {wrapWithColor(<span>¬</span>)}
+          <span>¬</span>
           <NodeRenderer
             node={node.children![0]}
             colorMap={colorMap}
             parentPrecedence={PRECEDENCE.not}
           />
-        </span>
+        </span>,
       );
     case 'and':
       return wrapWithColor(renderChildrenWithOp('・', false));
     case 'or':
       return wrapWithColor(renderChildrenWithOp('+', false));
     case 'nand':
-      return (
+      return wrapWithColor(
         <span className="inline-flex items-baseline">
-          {wrapWithColor(<span>¬</span>)}
-          {wrapWithColor(renderChildrenWithOp('・', true, 3))}
-        </span>
+          <span>¬</span>
+          {renderChildrenWithOp('・', true, 3)}
+        </span>,
       );
     case 'nor':
-      return (
+      return wrapWithColor(
         <span className="inline-flex items-baseline">
-          {wrapWithColor(<span>¬</span>)}
-          {wrapWithColor(renderChildrenWithOp('+', true, 1))}
-        </span>
+          <span>¬</span>
+          {renderChildrenWithOp('+', true, 1)}
+        </span>,
       );
     case 'xor':
       return wrapWithColor(renderChildrenWithOp('⊕', false));
     case 'xnor':
-      return (
+      return wrapWithColor(
         <span className="inline-flex items-baseline">
-          {wrapWithColor(<span>¬</span>)}
-          {wrapWithColor(renderChildrenWithOp('⊕', true, 2))}
-        </span>
+          <span>¬</span>
+          {renderChildrenWithOp('⊕', true, 2)}
+        </span>,
       );
     case 'buf':
       return node.children ? (
