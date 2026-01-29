@@ -120,12 +120,6 @@ export const ResultView: React.FC = () => {
               </code>
             )}
           </div>
-          {appStore.get().options.gateSet === 'custom' && (
-            <p className="mt-4 text-[10px] text-amber-600 dark:text-amber-400 font-medium border-t border-amber-100 dark:border-amber-900/50 pt-3">
-              * The logic expression above shows the minimized SOP/POS form. The actual gate
-              synthesis results are shown in the netlist below.
-            </p>
-          )}
         </div>
       </div>
 
