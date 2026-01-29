@@ -1,23 +1,35 @@
 # Logical Optimizationer
 
-論理式の最小化・最適化ツール。真理値表から論理式を生成し、Quine-McCluskey法などを用いて最適化を行います。
+A powerful, minimal logical expression optimizer and circuit synthesizer. Built with efficiency and aesthetics in mind.
 
 ## Features
 
-- 論理式のパースと評価
-- 真理値表 ↔ 論理式の相互変換
-- 論理式の最適化（SOP/POS形式）
-- 使用ゲートのカスタマイズ（Nand-only, Nor-only等）
-- 複数出力の共通項抽出
+- **Advanced Optimization**: Minimizes logical expressions using Quine-McCluskey (SOP/POS).
+- **Dual Input Modes**:
+  - **Expression**: Direct input (e.g., `A & B | ~C`) with symbol toolbar.
+  - **Truth Table**: Interactive table editing for visual design.
+- **Circuit Synthesis**: Generates gate-level netlists from optimized logic.
+- **Custom Gate Sets**: supports generic (AND/OR/NOT), NAND-only, NOR-only, and Custom configurations.
+- **Safe & Responsive**:
+  - Variable limit guard (Max 6 variables for performance safety).
+  - Fully responsive design for mobile and desktop.
+  - Dark mode support.
+
+## Supported Operators
+
+- **AND**: `&` or `・`
+- **OR**: `|` or `+`
+- **NOT**: `~` or `¬`
+- **XOR**: `^` or `⊕`
+- **Parentheses**: `(` `)`
 
 ## Tech Stack
 
-- **Core**: React + TypeScript + Vite
-- **Package Manager**: Bun
-- **Linter/Formatter**: oxlint / oxfmt
-- **Testing**: Bun Test
-- **CI/CD**: GitHub Actions
-- **Deployment**: Cloudflare Pages
+- **Core**: React 19 + TypeScript + Vite
+- **Styling**: TailwindCSS v4 + Framer Motion + Sonner
+- **State Management**: SimpleStack Store
+- **Testing**: Playwright (E2E), Bun Test (Unit)
+- **Deployment**: Cloudflare Pages / Static Hosting
 
 ## Getting Started
 
@@ -28,6 +40,8 @@
 ### Setup
 
 ```bash
+git clone <repository-url>
+cd logical-optimizationer
 bun install
 ```
 
@@ -37,39 +51,41 @@ bun install
 bun run dev
 ```
 
-### Linting & Formatting
+### Quality Assurance
 
 ```bash
-bun run lint      # Lint check
-bun run lint:fix  # Lint fix
-bun run fmt       # Format files
-bun run fmt:check # Check formatting
+# Linting
+bun run lint
+bun run lint:fix
+
+# Formatting
+bun run fmt
+
+# Testing
+bun test       # Unit tests
+bun run test:e2e # E2E tests (Playwright)
 ```
 
-### Testing
-
-```bash
-bun test
-```
-
-### Build
+### Production Build
 
 ```bash
 bun run build
+bun run preview
 ```
 
 ## Deployment
 
-This project is deployed to Cloudflare Pages.
+This project is optimized for **Cloudflare Pages**.
 
-### Setup (First time)
+1. **Build Command**: `bun run build`
+2. **Output Directory**: `dist`
+3. **Environment**: Recommended Node.js compatibility (via Bun)
 
-1. Connect your GitHub repository to Cloudflare Pages
-2. Build settings:
-   - Build command: `bun run build`
-   - Build output directory: `dist`
-   - Environment variables: None required
+## Limitations
 
-### Automatic Deployment
+- Maximum of **6 input variables** to prevent browser freezes during optimization.
+- "Don't Care" terms are currently treated as specific values in table mode (future update planned).
 
-- Push to `main` branch triggers automatic deployment
+---
+
+© 2026 Mu Design System
