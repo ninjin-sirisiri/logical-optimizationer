@@ -1,5 +1,6 @@
 import { store } from '@simplestack/store';
 
+import type { ExpressionNode } from '../core/circuit/expression';
 import type { Circuit, GateType } from '../core/circuit/types';
 import type { OptimizationResult } from '../core/optimizer/types';
 import type { TruthTable } from '../core/truth-table/types';
@@ -17,6 +18,7 @@ export interface AppState {
     optimizedExpression: string | null;
     detailedResults: OptimizationResult[] | null;
     circuit: Circuit | null;
+    expressionNodes: Record<string, ExpressionNode> | null;
   };
   options: {
     mode: OptimizationMode;
@@ -33,6 +35,7 @@ const initialState: AppState = {
     optimizedExpression: null,
     detailedResults: null,
     circuit: null,
+    expressionNodes: null,
   },
   options: {
     mode: 'SOP',

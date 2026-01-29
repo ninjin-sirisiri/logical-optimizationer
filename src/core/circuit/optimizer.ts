@@ -24,7 +24,14 @@ export function optimizeCircuit(circuit: Circuit): Circuit {
     const node = circuit.gates[nodeId];
     if (!node) return nodeId;
 
-    // Optimization: Double Negation check
+    // Optimization: Buffer removal
+    if (node.type === 'buf') {
+      const result = getEffectiveNode(node.inputs[0]);
+      memo.set(nodeId, result);
+      return result;
+    }
+
+    // Optimization: Double Negation check: not(not(x)) -> x
     if (node.type === 'not') {
       const inputId = node.inputs[0];
       const inputNode = circuit.gates[inputId];
@@ -36,10 +43,16 @@ export function optimizeCircuit(circuit: Circuit): Circuit {
     }
 
     // Optimization: NAND-based double negation: nand(nand(x,x), nand(x,x)) -> x
-    if (node.type === 'nand' && node.inputs[0] === node.inputs[1]) {
+    // Or more generally: nand(not(x), not(x)) -> x (if we consider nand(a,a) as not(a))
+    if (node.type === 'nand' && node.inputs.length === 2 && node.inputs[0] === node.inputs[1]) {
       const inputId = node.inputs[0];
       const inputNode = circuit.gates[inputId];
-      if (inputNode && inputNode.type === 'nand' && inputNode.inputs[0] === inputNode.inputs[1]) {
+      if (
+        inputNode &&
+        inputNode.type === 'nand' &&
+        inputNode.inputs.length === 2 &&
+        inputNode.inputs[0] === inputNode.inputs[1]
+      ) {
         const result = getEffectiveNode(inputNode.inputs[0]);
         memo.set(nodeId, result);
         return result;
@@ -47,10 +60,15 @@ export function optimizeCircuit(circuit: Circuit): Circuit {
     }
 
     // Optimization: NOR-based double negation: nor(nor(x,x), nor(x,x)) -> x
-    if (node.type === 'nor' && node.inputs[0] === node.inputs[1]) {
+    if (node.type === 'nor' && node.inputs.length === 2 && node.inputs[0] === node.inputs[1]) {
       const inputId = node.inputs[0];
       const inputNode = circuit.gates[inputId];
-      if (inputNode && inputNode.type === 'nor' && inputNode.inputs[0] === inputNode.inputs[1]) {
+      if (
+        inputNode &&
+        inputNode.type === 'nor' &&
+        inputNode.inputs.length === 2 &&
+        inputNode.inputs[0] === inputNode.inputs[1]
+      ) {
         const result = getEffectiveNode(inputNode.inputs[0]);
         memo.set(nodeId, result);
         return result;
@@ -64,7 +82,11 @@ export function optimizeCircuit(circuit: Circuit): Circuit {
     }
 
     const optimizedInputs = node.inputs.map((input) => getEffectiveNode(input));
-    const newNodeId = builder.addGate(node.type, optimizedInputs);
+
+    // Check if after input optimization, we have a new optimization opportunity
+    // Handle the case where a gate becomes redundant because its input became constant or duplicated
+
+    const newNodeId = builder.addGate(node.type as any, optimizedInputs);
     memo.set(nodeId, newNodeId);
     return newNodeId;
   }

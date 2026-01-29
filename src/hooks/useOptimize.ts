@@ -1,6 +1,8 @@
 import { toast } from 'sonner';
 
 import { convertASTToCircuit } from '../core/circuit/converter';
+import { circuitToExpressions, expressionNodeToString } from '../core/circuit/expression';
+import { optimizeCircuit } from '../core/circuit/optimizer';
 import { toNANDOnly, toNOROnly, toCustomGateSet } from '../core/circuit/transformers';
 import { minimize } from '../core/optimizer';
 import { parse } from '../core/parser';
@@ -65,15 +67,31 @@ export const useOptimize = () => {
         circuit = toCustomGateSet(circuit, options.enabledGates);
       }
 
-      // 5. Update store
+      // 5. Run peephole optimization
+      circuit = optimizeCircuit(circuit);
+
+      // 6. Generate final expression string based on gate set
+      let finalOptimizedExpression = optimizedStr;
+      let expressionNodes: Record<string, any> | null = null;
+
+      if (options.gateSet !== 'default') {
+        const exprNodes = circuitToExpressions(circuit);
+        expressionNodes = exprNodes;
+        finalOptimizedExpression = Object.entries(exprNodes)
+          .map(([name, node]) => `${name} = ${expressionNodeToString(node)}`)
+          .join('\n');
+      }
+
+      // 7. Update store
       appStore.set((state) => ({
         ...state,
         // Only update truth table if generated from expression
         truthTable: inputMode === 'expression' ? table : state.truthTable,
         results: {
-          optimizedExpression: optimizedStr,
+          optimizedExpression: finalOptimizedExpression,
           detailedResults: results,
           circuit: circuit,
+          expressionNodes: expressionNodes,
         },
       }));
 

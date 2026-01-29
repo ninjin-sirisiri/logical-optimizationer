@@ -1,6 +1,4 @@
 # ROADMAP.md
-
-> **Current Phase**: 10
 > **Milestone**: v1.0 — 組み合わせ回路の最適化
 
 ## Must-Haves (from SPEC)
@@ -168,7 +166,7 @@
 
 ### Phase 10: ゲート最適化と表示の一貫性の向上
 
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: 「Optimized Expression」表示でも指定ゲート制約を反映し、二重否定の自動消去と色分けの一貫性を維持する
 
 **Deliverables**:

@@ -6,6 +6,7 @@ import { cn } from '../../lib/utils';
 import { appStore } from '../../store';
 import { Button } from '../ui/Button';
 import { ExpressionDisplay } from './ExpressionDisplay';
+import { GateExpressionDisplay } from './GateExpressionDisplay';
 
 export const ResultView: React.FC = () => {
   const { results, truthTable } = useStoreValue(appStore);
@@ -94,7 +95,16 @@ export const ResultView: React.FC = () => {
         </div>
         <div className="p-6 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm">
           <div className="flex flex-col gap-4">
-            {results.detailedResults && truthTable ? (
+            {results.expressionNodes && results.circuit ? (
+              Object.entries(results.expressionNodes).map(([name, node]) => (
+                <GateExpressionDisplay
+                  key={name}
+                  outputVariable={name}
+                  expression={node}
+                  colorMap={netlistColorMap}
+                />
+              ))
+            ) : results.detailedResults && truthTable ? (
               results.detailedResults.map((res) => (
                 <ExpressionDisplay
                   key={res.outputVariable}
