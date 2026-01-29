@@ -1,3 +1,5 @@
+import { toast } from 'sonner';
+
 import { convertASTToCircuit } from '../core/circuit/converter';
 import { toNANDOnly, toNOROnly, toCustomGateSet } from '../core/circuit/transformers';
 import { minimize } from '../core/optimizer';
@@ -14,14 +16,26 @@ export const useOptimize = () => {
 
       // 1. Determine source of Truth Table
       if (inputMode === 'expression') {
-        if (!expression.trim()) return;
+        if (!expression.trim()) {
+          toast.error('Please enter an expression');
+          return;
+        }
         table = expressionToTruthTable(expression);
       } else {
         // Table mode: ensure table exists
-        if (!table) return;
+        if (!table) {
+          toast.error('No truth table available');
+          return;
+        }
       }
 
       if (!table) return;
+
+      // Variable Limit Guard
+      if (table.inputVariables.length > 6) {
+        toast.error(`Too many variables: ${table.inputVariables.length}. Maximum allowed is 6.`);
+        return;
+      }
 
       // 2. Run core optimizer
       const results = minimize(table, options.mode);
@@ -62,10 +76,13 @@ export const useOptimize = () => {
           circuit: circuit,
         },
       }));
+
+      toast.success('Optimization complete');
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Optimization failed:', error);
-      alert('Optimization failed. Check console for details.');
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      toast.error(`Optimization failed: ${message}`);
     }
   };
 
