@@ -7,9 +7,11 @@ wave: 3
 # Plan 9.3: Finalization & Deployment Preparation
 
 ## Objective
+
 リリースに向けた最終調整を行い、ドキュメントの更新とデプロイ設定を完了させる。
 
 ## Context
+
 - .gsd/SPEC.md
 - README.md
 - package.json
@@ -40,5 +42,6 @@ wave: 3
 </task>
 
 ## Success Criteria
+
 - [ ] README.md が最新の状態になっている
 - [ ] 本番用ビルドが正常に動作する

@@ -7,9 +7,11 @@ wave: 2
 # Plan 9.2: E2E Testing with Playwright
 
 ## Objective
+
 主要なユーザーフローが正しく動作することを Playwright を用いた E2E テストで保証する。
 
 ## Context
+
 - .gsd/SPEC.md
 - package.json
 
@@ -42,5 +44,6 @@ wave: 2
 </task>
 
 ## Success Criteria
+
 - [ ] Playwright がプロジェクトに統合されている
 - [ ] 主要な全機能（式入力、真理値表、最適化、ゲート変換）が自動テストでカバーされている

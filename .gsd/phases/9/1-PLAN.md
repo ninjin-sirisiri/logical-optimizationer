@@ -7,9 +7,11 @@ wave: 1
 # Plan 9.1: Application Polish & Infrastructure
 
 ## Objective
+
 アプリケーションの品質向上のため、通知機能（Toast）の導入、計算負荷ガードの実装、およびモバイル表示の微調整を行う。
 
 ## Context
+
 - .gsd/SPEC.md
 - .gsd/DECISIONS.md
 - src/core/optimizer/qm.ts
@@ -53,6 +55,7 @@ wave: 1
 </task>
 
 ## Success Criteria
+
 - [ ] エラーや成功時に Toast 通知が表示される
 - [ ] 6変数を超える計算に対してガードがかかる
 - [ ] モバイルサイズで真理値表がスクロール可能になっている
