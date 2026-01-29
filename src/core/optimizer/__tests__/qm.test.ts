@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'bun:test';
 
+import type { Term } from '../types';
+
 import { generatePrimeImplicants } from '../qm';
-import { Term } from '../types';
 
 describe('generatePrimeImplicants', () => {
   it('should handle a simple AND table (single output)', () => {

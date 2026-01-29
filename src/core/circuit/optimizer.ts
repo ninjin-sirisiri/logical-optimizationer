@@ -58,6 +58,11 @@ export function optimizeCircuit(circuit: Circuit): Circuit {
     }
 
     // No optimization found, reconstruct node
+    if (node.type === 'input') {
+      memo.set(nodeId, nodeId);
+      return nodeId;
+    }
+
     const optimizedInputs = node.inputs.map((input) => getEffectiveNode(input));
     const newNodeId = builder.addGate(node.type, optimizedInputs);
     memo.set(nodeId, newNodeId);

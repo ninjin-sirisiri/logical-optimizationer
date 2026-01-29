@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'bun:test';
 
-import { PITable, Target } from '../table';
-import { Implicant } from '../types';
+import type { Target } from '../table';
+import type { Implicant } from '../types';
+
+import { PITable } from '../table';
 
 describe('PITable', () => {
   it('should identify Essential Prime Implicants', () => {

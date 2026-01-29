@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'bun:test';
 
+import type { Implicant } from '../types';
+
 import { solveMinimumCover } from '../petrick';
-import { Implicant } from '../types';
 
 describe("Petrick's Solver", () => {
   it('should solve a simple set-cover problem', () => {

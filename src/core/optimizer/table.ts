@@ -23,11 +23,12 @@ export class PITable {
   private matrix: boolean[][]; // [piIndex][targetIndex]
   private piIndices: number[]; // Indices of active PIs
   private targetIndices: number[]; // Indices of active targets
+  public pis: Implicant[];
+  public targets: Target[];
 
-  constructor(
-    public pis: Implicant[],
-    public targets: Target[],
-  ) {
+  constructor(pis: Implicant[], targets: Target[]) {
+    this.pis = pis;
+    this.targets = targets;
     this.matrix = pis.map((pi) =>
       targets.map((target) => {
         // PI covers target if:
