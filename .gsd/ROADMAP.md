@@ -1,6 +1,6 @@
 # ROADMAP.md
 
-> **Current Phase**: 9
+> **Current Phase**: 10
 > **Milestone**: v1.0 — 組み合わせ回路の最適化
 
 ## Must-Haves (from SPEC)
@@ -163,6 +163,26 @@
 - エラーハンドリングの強化
 - ドキュメント（README、使用方法）
 - デプロイ設定（GitHub Pages / Vercel）
+
+---
+
+### Phase 10: ゲート最適化と表示の一貫性の向上
+
+**Status**: ⬜ Not Started
+**Objective**: 「Optimized Expression」表示でも指定ゲート制約を反映し、二重否定の自動消去と色分けの一貫性を維持する
+
+**Deliverables**:
+
+- 最適化済み論理式（Optimized Expression）でのゲート制約の反映
+- 回路合成時における二重否定（¬¬）の自動消去ロジックの実装
+- ゲート変換後も共通項や同じ機構の色分けを維持する仕組み
+- 複数の出力にまたがる最適化表示の改善
+- ユニットテスト
+
+**Key Algorithms**:
+
+- 二重否定消去（Double Negation Elimination）
+- ゲートセットに応じた式再構成（Gate-specific Expression Reconstruction）
 
 ---
 
