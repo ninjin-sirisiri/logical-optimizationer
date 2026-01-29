@@ -77,6 +77,19 @@ bun run preview
 
 This project is optimized for **Cloudflare Pages**.
 
+### Using CLI (Recommended)
+
+1. Authenticate (first time):
+   ```bash
+   npx wrangler login
+   ```
+2. Deploy:
+   ```bash
+   bun run deploy
+   ```
+
+### Using Dashboard (Git Integration)
+
 1. **Build Command**: `bun run build`
 2. **Output Directory**: `dist`
 3. **Environment**: Recommended Node.js compatibility (via Bun)
